@@ -1,0 +1,34 @@
+{
+  "host": "localhost",
+  "port": 3030,
+  "public": "../public/",
+  "paginate": {
+    "default": 10,
+    "max": 50
+  },
+  "authentication": {
+    "entity": "user",
+    "service": "users",
+    "secret": "Zy+/dp3HZPmgpCBFSa6lJ7lWr4o=",
+    "authStrategies": ["web3", "jwt"],
+    "jwtOptions": {
+      "header": {
+        "typ": "access"
+      },
+      "audience": "http://localhost:3030",
+      "issuer": "casino",
+      "algorithm": "HS256",
+      "expiresIn": "1d"
+    }
+  },
+  "mongodb": "mongodb://localhost:27017/nft_casino_api",
+  "web3Options": {
+    "network": "ETH_NETWORK",
+    "infuraProjectId": "INFURA_PROJECT_ID",
+    "collectionContractAddress": "COLLECTION_CONTRACT_ADDRESS",
+    "paymentContractAddress": "PAYMENT_CONTRACT_ADDRESS",
+    "withdrawContractAddress": "WITHDRAW_CONTRACT_ADDRESS",
+    "ownerPk": "CONTRACT_OWNER_PK",
+    "ownerAddress": "CONTRACT_OWNER_ADDRESS"
+  }
+}

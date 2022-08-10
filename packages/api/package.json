@@ -1,0 +1,71 @@
+{
+  "name": "@nft-casino/api",
+  "description": "",
+  "version": "0.0.0",
+  "homepage": "",
+  "private": true,
+  "main": "src",
+  "keywords": [
+    "feathers"
+  ],
+  "author": {
+    "name": "Mr.DoSS",
+    "email": "artfut10@gmail.com"
+  },
+  "contributors": [],
+  "bugs": {},
+  "directories": {
+    "lib": "src",
+    "config": "config/"
+  },
+  "engines": {
+    "node": "^14.0.0",
+    "yarn": ">= 0.18.0"
+  },
+  "scripts": {
+    "lint": "eslint src/. test/. --config .eslintrc.json --ext .ts --fix",
+    "dev": "ts-node-dev --no-notify src/",
+    "start": "yarn run compile && node lib/",
+    "jest": "jest --forceExit",
+    "compile": "shx rm -rf lib/ && tsc"
+  },
+  "standard": {
+    "ignore": []
+  },
+  "types": "lib/",
+  "dependencies": {
+    "@feathersjs/authentication": "^4.5.15",
+    "@feathersjs/authentication-local": "^4.5.15",
+    "@feathersjs/authentication-oauth": "^4.5.15",
+    "@feathersjs/configuration": "^4.5.15",
+    "@feathersjs/errors": "^4.5.15",
+    "@feathersjs/express": "^4.5.15",
+    "@feathersjs/feathers": "^4.5.15",
+    "@feathersjs/transport-commons": "^4.5.15",
+    "chance": "^1.1.8",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "feathers-hooks-common": "^6.1.4",
+    "feathers-mongoose": "^8.5.1",
+    "feathers-permissions": "^2.1.4",
+    "helmet": "^5.1.0",
+    "lodash": "^4.17.21",
+    "mongodb-core": "^3.2.7",
+    "mongoose": "^6.3.6",
+    "serve-favicon": "^2.5.0",
+    "web3": "^1.7.4",
+    "winston": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/chance": "^1.1.3",
+    "@types/compression": "^1.7.2",
+    "@types/cors": "^2.8.12",
+    "@types/jsonwebtoken": "^8.5.8",
+    "@types/lodash": "^4.14.182",
+    "@types/serve-favicon": "^2.5.3",
+    "axios": "^0.27.2",
+    "shx": "^0.3.4",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.7.3"
+  }
+}
