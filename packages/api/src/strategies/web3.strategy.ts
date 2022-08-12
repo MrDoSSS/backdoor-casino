@@ -28,6 +28,18 @@ export class Web3Strategy extends AuthenticationBaseStrategy {
     return entityService.get(id)
   }
 
+  async updateEntityNonce(id: string) {
+    const entityService = this.entityService
+
+    if (entityService === null) {
+      throw new NotAuthenticated('Could not find entity service')
+    }
+
+    return entityService.patch(id, {
+      nonce: Math.floor(Math.random() * (9999 - 1000) + 1000),
+    })
+  }
+
   // @ts-ignore
   async authenticate(authentication: AuthenticationRequest) {
     const { entity } = this.configuration
@@ -38,6 +50,12 @@ export class Web3Strategy extends AuthenticationBaseStrategy {
     }
 
     const result = await this.getEntity(address)
+
+    if (!result) {
+      throw new NotAuthenticated('User not found')
+    }
+
+    await this.updateEntityNonce(address)
 
     return {
       authentication: { strategy: this.name },

@@ -1,0 +1,31 @@
+@import 'bootstrap/scss/bootstrap';
+@import 'buttons';
+@import 'headings';
+
+:root {
+  --bs-body-font-size: 2rem;
+  --bs-font-sans-serif: 'Teko', sans-serif;
+  --bs-body-color: #fff;
+  --bs-body-bg: #070707;
+}
+
+html {
+  font-size: 10px;
+  min-height: 100%;
+  height: -webkit-fill-available;
+  -webkit-font-smoothing: antialiased;
+}
+
+body,
+#app {
+  height: 100%;
+}
+
+.container {
+  --bs-gutter-x: 6rem;
+}
+
+img {
+  display: block;
+  width: 100%;
+}

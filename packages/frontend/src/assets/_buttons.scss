@@ -1,0 +1,37 @@
+.btn {
+  text-transform: uppercase;
+
+  &-round {
+    border-radius: 2rem;
+  }
+
+  &-lg {
+    --bs-btn-font-size: 2rem;
+    --bs-btn-padding-y: 0.8rem;
+    min-width: 17rem;
+  }
+
+  &-bordered {
+    position: relative;
+
+    &:hover {
+      &::before {
+        border-color: inherit;
+      }
+    }
+
+    &:before {
+      content: '';
+      position: absolute;
+      background-color: transparent;
+      border: 0.1rem solid #fff;
+      border-radius: 4rem;
+      top: -1rem;
+      left: -1rem;
+      right: -1rem;
+      bottom: -1rem;
+      z-index: -1;
+      transition: border-color 0.1s ease-in-out;
+    }
+  }
+}

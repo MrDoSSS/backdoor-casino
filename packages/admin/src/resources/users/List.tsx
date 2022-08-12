@@ -5,7 +5,7 @@ export const UsersList = () => {
     <List>
       <Datagrid>
         <TextField source="address" />
-        <NumberField source="balance" />
+        <NumberField source="playingChips" />
         <TextField source="permissions" />
       </Datagrid>
     </List>
