@@ -12,13 +12,17 @@ jobs:
       - name: Build API
         uses: appleboy/ssh-action@master
         env:
+          CONTRACT_OWNER_ADDRESS: ${{ secrets.CONTRACT_OWNER_ADDRESS }}
+          CONTRACT_OWNER_PK: ${{ secrets.CONTRACT_OWNER_PK }}
+          MONGODB_URL: ${{ secrets.MONGODB_URL }}
           NODE_ENV: production
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          run: |
+          envs: CONTRACT_OWNER_ADDRESS,CONTRACT_OWNER_PK,MONGODB_URL,NODE_ENV
+          script: |
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
             nvm use 16
@@ -27,7 +31,7 @@ jobs:
             cd packages/api
             yarn install --frozen-lockfile
             yarn compile
-            CONTRACT_OWNER_ADDRESS=${{ secrets.CONTRACT_OWNER_ADDRESS }} CONTRACT_OWNER_PK=${{ secrets.CONTRACT_OWNER_PK }} MONGODB_URL=${{ secrets.MONGODB_URL }} pm2 start
+            CONTRACT_OWNER_ADDRESS=$CONTRACT_OWNER_ADDRESS CONTRACT_OWNER_PK=$CONTRACT_OWNER_PK MONGODB_URL=$MONGODB_URL pm2 start
       - name: Build frontend
         uses: appleboy/ssh-action@master
         with:
@@ -35,7 +39,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          run: |
+          script: |
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
             nvm use 16
@@ -49,7 +53,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          run: |
+          script: |
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
             nvm use 16
