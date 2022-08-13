@@ -30,6 +30,7 @@ jobs:
             cd packages/api
             yarn install --frozen-lockfile
             yarn compile
+            echo '${{ env.CONTRACT_OWNER_ADDRESS }}'
             CONTRACT_OWNER_ADDRESS=${{ env.CONTRACT_OWNER_ADDRESS }} CONTRACT_OWNER_PK=${{ env.CONTRACT_OWNER_PK }} MONGODB_URL=${{ env.MONGODB_URL }} pm2 start
       - name: Build frontend
         uses: appleboy/ssh-action@master
