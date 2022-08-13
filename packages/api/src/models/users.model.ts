@@ -21,6 +21,10 @@ export default function (app: Application): Model<any> {
         type: Number,
         default: 0,
       },
+      unclaimedPlayingChips: {
+        type: Number,
+        default: 0,
+      },
       prizeTickets: {
         type: Number,
         default: 0,

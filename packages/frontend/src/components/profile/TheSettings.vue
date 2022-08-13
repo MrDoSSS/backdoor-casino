@@ -6,7 +6,7 @@ import { ref } from 'vue'
 const walletStore = useWalletStore()
 const userStore = useUserStore()
 
-const username = ref('')
+const username = ref(userStore.user?.username)
 </script>
 
 <template>

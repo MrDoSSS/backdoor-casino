@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 
 interface Props {
-  type: 'small' | 'medium' | 'big'
+  size: 'small' | 'medium' | 'big'
   best?: boolean
 }
 
@@ -20,8 +20,8 @@ const priceMap = {
   big: 0.1,
 }
 
-const amount = computed(() => amountMap[props.type])
-const price = computed(() => priceMap[props.type])
+const amount = computed(() => amountMap[props.size])
+const price = computed(() => priceMap[props.size])
 </script>
 
 <template>

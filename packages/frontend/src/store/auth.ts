@@ -2,6 +2,7 @@ import { api } from '@/feathers'
 import { useUserStore } from './user'
 import { web3 } from '@/web3'
 import { defineStore } from 'pinia'
+import { router } from '@/router'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -13,7 +14,7 @@ export const useAuthStore = defineStore('auth', {
       try {
         address = address.toLowerCase()
         const usersStore = useUserStore()
-        let user = await usersStore.get(address).catch(() => false)
+        let user = await usersStore.get(address).catch(() => null)
 
         if (!user) {
           user = await usersStore.create({ address })
@@ -21,7 +22,9 @@ export const useAuthStore = defineStore('auth', {
 
         const signature = await web3.eth.personal.sign(
           web3.utils.utf8ToHex(
-            `Welcome to Backdoor Casino!\n\nThis request will not trigger a blockchain transaction or cost any gas fees.\n\nYour authentication status will reset after 24 hours.\n\nAddress: ${address}\n\nNonce: ${user.nonce}`
+            `Welcome to Backdoor Casino!\n\nThis request will not trigger a blockchain transaction or cost any gas fees.\n\nYour authentication status will reset after 24 hours.\n\nAddress: ${address}\n\nNonce: ${
+              user!.nonce
+            }`
           ),
           address,
           ''
@@ -63,6 +66,7 @@ export const useAuthStore = defineStore('auth', {
     async signOut() {
       await api.logout()
       this.loggedIn = false
+      router.push({ name: 'home' })
     },
   },
 })

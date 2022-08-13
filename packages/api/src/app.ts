@@ -1,3 +1,5 @@
+import 'dotenv/config'
+
 import path from 'path'
 import favicon from 'serve-favicon'
 import compress from 'compression'
@@ -43,7 +45,7 @@ app.configure(express.rest())
 
 app.configure(mongoose)
 
-// app.configure(web3)
+app.configure(web3)
 
 // Configure other middleware (see `middleware/index.ts`)
 app.configure(middleware)

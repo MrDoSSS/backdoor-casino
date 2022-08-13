@@ -6,21 +6,39 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 contract Payment is Ownable, ReentrancyGuard {
 
-  event ChipsPurchased(address receiver, uint256 amount);
+  event ChipsPurchased(address receiver, string size, uint256 price, uint256 amount);
 
   address t1 = 0x402351069CFF2F0324A147eC0a138a1C21491591;
   address t2 = 0x66B60143Fe3388551a4749aCD5C07Bbd368874ad;
 
-  uint256 public price = 0.1 ether;
+  mapping (string => uint256) public prices;
+  mapping (string => uint256) public amounts;
 
-  function purchaseChips(uint256 _amount) public payable {
-    require(msg.value >= price * _amount, "Ether value sent is not correct");
+  constructor() {
+    prices["small"] = 0.02 ether;
+    prices["medium"] = 0.05 ether;
+    prices["big"] = 0.1 ether;
 
-    emit ChipsPurchased(msg.sender, _amount);
+    amounts["small"] = 100;
+    amounts["medium"] = 400;
+    amounts["big"] = 1000;
   }
 
-  function setPrice(uint256 _price) public onlyOwner{
-    price = _price;
+  function purchaseChips(string memory _size) public payable {
+    uint256 _price = prices[_size];
+    uint256 _amount = amounts[_size];
+
+    require(msg.value >= _price, "Ether value sent is not correct");
+
+    emit ChipsPurchased(msg.sender, _size, _price, _amount);
+  }
+
+  function setPrice(string memory _size, uint256 _price) public onlyOwner {
+    prices[_size] = _price;
+  }
+
+  function setAmount(string memory _size, uint256 _amount) public onlyOwner {
+    prices[_size] = _amount;
   }
 
   function withdraw() external onlyOwner nonReentrant {

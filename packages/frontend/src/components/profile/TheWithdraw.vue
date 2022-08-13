@@ -1,22 +1,13 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
-
-const amount = ref(0)
+import { useUserStore } from '@/store/user'
+const userStore = useUserStore()
 </script>
 
 <template>
-  <div class="mb-1 lh-1">
-    Current Balance: <span class="ms-1">0.075 ETH</span>
-  </div>
   <div class="mb-2 lh-1">
-    Withdraw Amount:
-    <input
-      class="ms-1"
-      type="number"
-      step="0.01"
-      min="0"
-      v-model.number="amount"
-    />
+    Current Balance: <span class="ms-1">{{ userStore.user?.eth }} ETH</span>
   </div>
-  <button class="btn btn-primary btn-sm">Request Withdraw</button>
+  <button class="btn btn-primary btn-sm" :disabled="userStore.user?.eth === 0">
+    Request Withdraw
+  </button>
 </template>

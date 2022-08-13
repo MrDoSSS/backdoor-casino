@@ -26,8 +26,8 @@ export default function (app: Application): void {
   const web3 = new Web3(provider)
 
   const account = web3.eth.accounts.wallet.add({
-    address: ownerPk,
-    privateKey: ownerAddress,
+    address: ownerAddress,
+    privateKey: ownerPk,
   })
 
   const collectionContract = { collectionContractAddress }

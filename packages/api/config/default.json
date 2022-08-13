@@ -6,6 +6,7 @@
     "default": 10,
     "max": 50
   },
+  "env": "development",
   "authentication": {
     "entity": "user",
     "service": "users",
@@ -15,13 +16,13 @@
       "header": {
         "typ": "access"
       },
-      "audience": "http://localhost:3030",
+      "audience": "https://api.backdoorcasino.xyz",
       "issuer": "casino",
       "algorithm": "HS256",
       "expiresIn": "1d"
     }
   },
-  "mongodb": "mongodb://localhost:27017/nft_casino_api",
+  "mongodb": "MONGODB_URL",
   "web3Options": {
     "network": "ETH_NETWORK",
     "infuraProjectId": "INFURA_PROJECT_ID",

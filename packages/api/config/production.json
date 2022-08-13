@@ -1,4 +1,4 @@
 {
-  "host": "nft-casino-api-app.feathersjs.com",
-  "port": "PORT"
+  "host": "localhost",
+  "env": "production"
 }

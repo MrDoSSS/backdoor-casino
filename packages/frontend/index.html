@@ -10,10 +10,31 @@
       href="https://fonts.googleapis.com/css2?family=Teko:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <style>
+      #loading-app {
+        position: fixed;
+        background-color: #070707;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #loading-app img {
+        max-width: 300px;
+      }
+    </style>
     <title>Backdoor</title>
   </head>
   <body>
     <div id="app"></div>
+    <div id="loading-app">
+      <img src="/logo.png" alt="" />
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
