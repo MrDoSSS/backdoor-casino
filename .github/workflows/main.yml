@@ -24,6 +24,7 @@ jobs:
           script: |
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
+            nvm use 16
             cd ~/backdoor-casino
             git pull origin main
             cd packages/api
@@ -40,6 +41,7 @@ jobs:
           script: |
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
+            nvm use 16
             cd ~/backdoor-casino/packages/frontend
             yarn install --frozen-lockfile
             yarn build
@@ -53,6 +55,7 @@ jobs:
           script: |
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
+            nvm use 16
             cd ~/backdoor-casino/packages/admin
             yarn install --frozen-lockfile
             yarn build
