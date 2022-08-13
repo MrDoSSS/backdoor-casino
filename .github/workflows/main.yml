@@ -31,7 +31,7 @@ jobs:
             cd packages/api
             yarn install --frozen-lockfile
             yarn compile
-            CONTRACT_OWNER_ADDRESS=$CONTRACT_OWNER_ADDRESS CONTRACT_OWNER_PK=$CONTRACT_OWNER_PK MONGODB_URL=$MONGODB_URL pm2 start
+            pm2 start
       - name: Build frontend
         uses: appleboy/ssh-action@master
         with:

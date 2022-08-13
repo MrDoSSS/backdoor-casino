@@ -1,5 +1,3 @@
-console.log(process.env.CONTRACT_OWNER_ADDRESS)
-
 module.exports = {
   apps: [
     {
