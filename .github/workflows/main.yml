@@ -22,8 +22,8 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            source ~/.bashrc
-            nvm use 16
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
             cd ~/backdoor-casino
             git pull origin main
             cd packages/api
@@ -38,8 +38,8 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            source ~/.bashrc
-            nvm use 16
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
             cd ~/backdoor-casino/packages/frontend
             yarn install --frozen-lockfile
             yarn build
@@ -51,8 +51,8 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            source ~/.bashrc
-            nvm use 16
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
             cd ~/backdoor-casino/packages/admin
             yarn install --frozen-lockfile
             yarn build
