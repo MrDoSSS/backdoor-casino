@@ -11,6 +11,15 @@
     min-width: 17rem;
   }
 
+  &-sm {
+    --bs-btn-font-size: 1.8rem;
+    --bs-btn-padding-y: 0.1rem;
+    --bs-btn-padding-x: 1rem;
+    text-transform: unset;
+    font-weight: 400;
+    min-width: 7rem;
+  }
+
   &-bordered {
     position: relative;
 

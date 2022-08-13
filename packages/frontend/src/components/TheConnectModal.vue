@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { emitter } from '@/event-bus'
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import Modal from './Modal.vue'
 import { setInbrowserProvider, setWalletLinkProvider } from '@/ethereum'
 import { useWalletStore } from '@/store/wallet'
@@ -10,8 +10,18 @@ const modalRef = ref()
 const loading = ref(false)
 const walletStore = useWalletStore()
 
-emitter.on('ConnectModal:show', () => modalRef.value.show())
-emitter.on('ConnectModal:hide', () => modalRef.value.hide())
+const showModal = () => modalRef.value.show()
+const hideModal = () => modalRef.value.hide()
+
+onMounted(() => {
+  emitter.on('ConnectModal:show', showModal)
+  emitter.on('ConnectModal:hide', hideModal)
+})
+
+onUnmounted(() => {
+  emitter.off('ConnectModal:show', showModal)
+  emitter.off('ConnectModal:hide', hideModal)
+})
 
 const connectMetamask = () => {
   setInbrowserProvider()

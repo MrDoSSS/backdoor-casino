@@ -20,11 +20,11 @@ defineExpose({
           <h3 class="modal-title"><slot name="title" /></h3>
           <button
             type="button"
-            class="close text-primary"
+            class="close text-white"
             data-bs-dismiss="modal"
             aria-label="Close"
           >
-            <i class="d-flex bi bi-x-circle"></i>
+            <i class="d-flex bi bi-x"></i>
           </button>
         </div>
         <div class="modal-body">
@@ -75,8 +75,6 @@ defineExpose({
       top: 2rem;
       right: 2rem;
       opacity: 1;
-      background-repeat: no-repeat;
-      background-size: contain;
       padding: 0;
       display: flex;
       border: none;

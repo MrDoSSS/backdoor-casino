@@ -12,6 +12,7 @@ export default function (app: Application): Model<any> {
     {
       permissions: { type: Array, default: ['user'] },
       address: { type: String, required: true, unique: true },
+      username: { type: String, default: '' },
       nonce: {
         type: Number,
         default: Math.floor(Math.random() * (9999 - 1000) + 1000),

@@ -1,38 +1,28 @@
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
-import { ScrollSpy } from 'bootstrap'
-import { emitter } from '@/event-bus'
-import { useWalletStore } from '@/store/wallet'
-import { useAuthStore } from '@/store/auth'
 import { useWhitelistStore } from '@/store/whitelist'
-import { inject } from 'vue'
+import { useNavbar } from '@/composables/navbar'
+import { ScrollSpy } from 'bootstrap'
+import { onMounted, onUnmounted } from 'vue'
+import { useSmoothScroll } from '@/composables/smooth-scroll'
 
-const navbar = ref<HTMLElement>()
+const whitelistStore = useWhitelistStore()
+const { walletStore, authStore, showConnectModal, navbarRef, slisedWallet } =
+  useNavbar()
+const smoothScroll = useSmoothScroll()
 
 let scrollSpy: ScrollSpy
-const showConnectModal = () => emitter.emit('ConnectModal:show', false)
 
-const walletStore = useWalletStore()
-const authStore = useAuthStore()
-const whitelistStore = useWhitelistStore()
-const mq = inject('mq') as any
-
-const smoothScroll = (e: MouseEvent) => {
-  const link = e.target as HTMLLinkElement
-  const href = link.getAttribute('href')!
-  const target = document.querySelector(href)!
-  const { top: bodyTop } = document.body.getBoundingClientRect()
-  const { top } = target.getBoundingClientRect()
-
-  scroll({
-    top: top - bodyTop - (mq.lgPlus ? 180 : 20),
-    behavior: 'smooth',
-  })
+const scrollListener = () => {
+  if (document.documentElement.scrollTop > navbarRef.value!.clientHeight) {
+    navbarRef.value!.classList.add('sticky-lg-top')
+  } else {
+    navbarRef.value!.classList.remove('sticky-lg-top')
+  }
 }
 
-onMounted(async () => {
+onMounted(() => {
   const scrollSpyParams = {
-    target: navbar.value!,
+    target: navbarRef.value!,
     rootMargin: '0px 0px -50%',
   }
   scrollSpy = new ScrollSpy(
@@ -40,18 +30,18 @@ onMounted(async () => {
     scrollSpyParams as unknown as any
   )
 
-  document.addEventListener('scroll', (e) => {
-    if (document.documentElement.scrollTop > navbar.value!.clientHeight) {
-      navbar.value!.classList.add('sticky-lg-top')
-    } else {
-      navbar.value!.classList.remove('sticky-lg-top')
-    }
-  })
+  document.addEventListener('scroll', scrollListener)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('scroll', scrollListener)
+
+  scrollSpy?.dispose()
 })
 </script>
 
 <template>
-  <nav class="navbar navbar-expand navbar-dark bg-dark" ref="navbar">
+  <nav class="navbar navbar-expand navbar-dark bg-dark" ref="navbarRef">
     <div class="container-xl flex-lg-row flex-column">
       <router-link
         :to="{ name: 'home' }"
@@ -97,13 +87,7 @@ onMounted(async () => {
             <span class="nav-link text-danger" v-else>Not Whitelisted</span>
           </li>
           <li class="nav-item">
-            <span class="nav-link text-success"
-              >{{ walletStore.currentAccount.slice(0, 4) }}...{{
-                walletStore.currentAccount.slice(
-                  walletStore.currentAccount.length - 4
-                )
-              }}</span
-            >
+            <span class="nav-link text-success">{{ slisedWallet }}</span>
           </li>
         </template>
         <li class="nav-item" v-else>
@@ -123,29 +107,3 @@ onMounted(async () => {
     </div>
   </nav>
 </template>
-
-<style lang="scss">
-.navbar {
-  border-bottom: 0.2rem solid #ffffff;
-
-  &-brand {
-    max-width: 17rem;
-
-    img {
-      max-width: inherit;
-    }
-  }
-
-  .nav-link {
-    line-height: 1.2;
-
-    &.active {
-      border-bottom: 0.2rem solid #fff;
-    }
-  }
-
-  .btn {
-    font-size: 1.8rem;
-  }
-}
-</style>

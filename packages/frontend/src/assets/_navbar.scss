@@ -1,0 +1,33 @@
+.navbar {
+  border-bottom: 0.2rem solid #ffffff;
+
+  &-brand {
+    max-width: 17rem;
+
+    img {
+      max-width: inherit;
+    }
+  }
+
+  .nav-link {
+    line-height: 1.2;
+
+    &.active {
+      position: relative;
+
+      &:after {
+        content: '';
+        position: absolute;
+        height: 0.2rem;
+        left: var(--bs-navbar-nav-link-padding-x);
+        right: var(--bs-navbar-nav-link-padding-x);
+        bottom: -0rem;
+        background-color: #fff;
+      }
+    }
+  }
+
+  .btn {
+    font-size: 1.8rem;
+  }
+}
