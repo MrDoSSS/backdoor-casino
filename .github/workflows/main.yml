@@ -22,7 +22,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            source ~/.bashrc
+            nvm use 16
             cd ~/backdoor-casino
             git pull origin main
             cd packages/api
@@ -37,7 +37,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            source ~/.bashrc
+            nvm use 16
             cd ~/backdoor-casino/packages/frontend
             yarn install --frozen-lockfile
             yarn build
@@ -49,7 +49,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            source ~/.bashrc
+            nvm use 16
             cd ~/backdoor-casino/packages/admin
             yarn install --frozen-lockfile
             yarn build
