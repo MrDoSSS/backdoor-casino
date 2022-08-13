@@ -1,4 +1,5 @@
 import { useWhitelistStore } from '@/store/whitelist'
+import { useTwitterCodeStore } from '@/store/twitter-code'
 import { useAuthStore } from '@/store/auth'
 import { defineStore } from 'pinia'
 import { ethereum } from '@/ethereum'
@@ -33,9 +34,11 @@ export const useWalletStore = defineStore('wallet', {
         if (this.connected) {
           const authStore = useAuthStore()
           const whitelistStore = useWhitelistStore()
+          const twitterCodeStore = useTwitterCodeStore()
 
           await authStore.signIn(this.currentAccount)
           await whitelistStore.find(this.currentAccount)
+          await twitterCodeStore.find(this.currentAccount)
         }
       } catch (e) {
         console.error(e)
@@ -44,9 +47,12 @@ export const useWalletStore = defineStore('wallet', {
     async disconnect() {
       const authStore = useAuthStore()
       const whitelistStore = useWhitelistStore()
+      const twitterCodeStore = useTwitterCodeStore()
+
       this.currentAccount = ''
 
       whitelistStore.reset()
+      twitterCodeStore.reset()
 
       if (authStore.loggedIn) await authStore.signOut()
     },

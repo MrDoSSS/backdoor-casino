@@ -22,5 +22,9 @@ export const useTwitterCodeStore = defineStore('twitter-code', {
     create(data: any) {
       return service.create(data)
     },
+    reset() {
+      this.exists = false
+      this.code = ''
+    },
   },
 })
