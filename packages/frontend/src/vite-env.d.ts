@@ -14,6 +14,7 @@ declare module 'web3/dist/web3.min' {
 interface ImportMetaEnv {
   VITE_CONTRACT_ADDRESS: string
   VITE_INFURA_PROJECT_ID: string
+  VITE_API_URL: string
 }
 
 declare module 'vue3-mq' {
