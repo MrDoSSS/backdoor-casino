@@ -1,0 +1,52 @@
+name: Deploy to server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Build API
+        uses: appleboy/ssh-action@master
+        env:
+          CONTRACT_OWNER_ADDRESS: ${{ secrets.CONTRACT_OWNER_ADDRESS }}
+          CONTRACT_OWNER_PK: ${{ secrets.CONTRACT_OWNER_PK }}
+          MONGODB_URL: ${{ secrets.MONGODB_URL }}
+          NODE_ENV: production
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd ~/backdoor-casino
+            git pull origin master
+            cd packages/api
+            yarn install --frozen-lockfile
+            yarn compile
+            pm2 start
+      - name: Build frontend
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd ~/backdoor-casino/packages/frontend
+            yarn install --frozen-lockfile
+            yarn build
+      - name: Build admin
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd ~/backdoor-casino/packages/admin
+            yarn install --frozen-lockfile
+            yarn build
