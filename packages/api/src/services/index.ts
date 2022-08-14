@@ -6,7 +6,8 @@ import productTiers from './product-tiers/product-tiers.service'
 import whitelist from './whitelist/whitelist.service'
 import rewards from './rewards/rewards.service'
 import slotMachine from './slot-machine/slot-machine.service'
-import twitterCodes from './twitter-codes/twitter-codes.service';
+import twitterCodes from './twitter-codes/twitter-codes.service'
+import withdraw from './withdraw/withdraw.service'
 // Don't remove this comment. It's needed to format import lines nicely.
 
 export default function (app: Application): void {
@@ -17,5 +18,6 @@ export default function (app: Application): void {
   app.configure(whitelist)
   app.configure(rewards)
   app.configure(slotMachine)
-  app.configure(twitterCodes);
+  app.configure(twitterCodes)
+  app.configure(withdraw)
 }

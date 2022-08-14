@@ -20,6 +20,7 @@ const price = await paymentContract.methods
   .prices(props.size)
   .call()
   .then(parseInt)
+  .catch(() => 0)
 const priceInEth = web3.utils.fromWei(price.toString(), 'ether')
 
 const buy = async () => {

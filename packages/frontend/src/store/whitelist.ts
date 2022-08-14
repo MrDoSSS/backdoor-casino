@@ -1,7 +1,5 @@
 import { defineStore } from 'pinia'
-import { api } from '@/feathers'
-
-const service = api.service('whitelist')
+import { whitelistService } from '@/services'
 
 export const useWhitelistStore = defineStore('whitelist', {
   state: () => ({
@@ -10,7 +8,9 @@ export const useWhitelistStore = defineStore('whitelist', {
   }),
   actions: {
     async find(address: string) {
-      const { data, total } = await service.find({ query: { address } })
+      const { data, total } = await whitelistService.find({
+        query: { address },
+      })
 
       if (total) {
         const [result] = data

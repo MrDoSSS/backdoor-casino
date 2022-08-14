@@ -4,6 +4,7 @@
 // for more of what you can do here.
 import { Application } from '../declarations'
 import { Model, Mongoose } from 'mongoose'
+import leanPlugin from 'mongoose-lean-virtuals'
 
 export default function (app: Application): Model<any> {
   const modelName = 'users'
@@ -30,14 +31,35 @@ export default function (app: Application): Model<any> {
         default: 0,
       },
       eth: {
-        type: Number,
-        default: 0,
+        type: String,
+        default: '0',
+      },
+      lockedEth: {
+        type: String,
+        default: '0',
       },
     },
     {
       timestamps: true,
+      toJSON: {
+        virtuals: true,
+      },
+      toObject: {
+        virtuals: true,
+      },
     }
   )
+
+  const web3 = app.get('web3Client')
+
+  schema.virtual('availableEth').get(function () {
+    return web3.utils
+      .toBN(this.eth)
+      .sub(web3.utils.toBN(this.lockedEth))
+      .toString()
+  })
+
+  schema.plugin(leanPlugin)
 
   // This is necessary to avoid model compilation errors in watch mode
   // see https://mongoosejs.com/docs/api/connection.html#connection_Connection-deleteModel

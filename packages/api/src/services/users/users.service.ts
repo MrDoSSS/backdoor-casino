@@ -17,6 +17,7 @@ export default function (app: Application): void {
     Model: createModel(app),
     paginate: app.get('paginate'),
     id: 'address',
+    lean: { virtuals: true } as unknown as any,
   }
 
   // Initialize our service with any options it requires

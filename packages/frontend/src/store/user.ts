@@ -1,7 +1,5 @@
 import { defineStore } from 'pinia'
-import { api } from '@/feathers'
-
-const service = api.service('users')
+import { usersService } from '@/services'
 
 type User = {
   address: string
@@ -9,7 +7,9 @@ type User = {
   playingChips: number
   unclaimedPlayingChips: number
   prizeTickets: number
-  eth: number
+  eth: string
+  lockedEth: string
+  availableEth: string
   nonce: number
 }
 
@@ -19,11 +19,11 @@ export const useUserStore = defineStore('user', {
   }),
   actions: {
     async get(address: string) {
-      this.user = await service.get(address)
+      this.user = await usersService.get(address)
       return this.user
     },
     async create(data: any) {
-      this.user = await service.create(data)
+      this.user = await usersService.create(data)
       return this.user
     },
   },

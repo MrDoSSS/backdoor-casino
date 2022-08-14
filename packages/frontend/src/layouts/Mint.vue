@@ -9,7 +9,10 @@ import TheConnectModal from '@/components/TheConnectModal.vue'
     <main class="flex-grow-1 d-flex flex-column">
       <TheMintNavbar />
 
-      <RouterView />
+      <Suspense>
+        <RouterView />
+        <template #fallback>Loading...</template>
+      </Suspense>
     </main>
     <TheFooter />
   </div>

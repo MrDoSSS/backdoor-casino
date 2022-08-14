@@ -75,12 +75,12 @@ const generateCode = async () => {
 const tweet = () => {
   const params =
     'scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=600,height=600'
-  const text = `Grand Casino Opening ♠️\n\nJoin me: our website\n\n🎰 Code: ${twitterCodeStore.code}\n\nFree mint\n\n`
+  const text = `Backdoor Casino Opening ♠️\n\nFirst ever NFT Slot Machine\n\nJoin VIP List: backdoorcasino.xyz\n\n🎰 Code: ${twitterCodeStore.code}\n\nFree mint soon\n\n`
 
   window.open(
     `https://twitter.com/intent/tweet?text=${encodeURI(
       text
-    )}&hashtags=ourhashtag&via=mrdoss`,
+    )}&hashtags=backdoorcasino&via=backdoorcasino`,
     '',
     params
   )

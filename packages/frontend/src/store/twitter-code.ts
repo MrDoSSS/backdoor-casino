@@ -1,7 +1,5 @@
 import { defineStore } from 'pinia'
-import { api } from '@/feathers'
-
-const service = api.service('twitter-codes')
+import { twitterCodesService } from '@/services'
 
 export const useTwitterCodeStore = defineStore('twitter-code', {
   state: () => ({
@@ -10,7 +8,9 @@ export const useTwitterCodeStore = defineStore('twitter-code', {
   }),
   actions: {
     async find(address: string) {
-      const { data, total } = await service.find({ query: { address } })
+      const { data, total } = await twitterCodesService.find({
+        query: { address },
+      })
 
       if (total) {
         const [result] = data
@@ -20,7 +20,7 @@ export const useTwitterCodeStore = defineStore('twitter-code', {
       this.exists = !!total
     },
     create(data: any) {
-      return service.create(data)
+      return twitterCodesService.create(data)
     },
     reset() {
       this.exists = false

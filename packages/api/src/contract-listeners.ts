@@ -21,4 +21,11 @@ export default function (app: Application): void {
 
     usersService.patch(address, { playingChips: user.playingChips + amount })
   })
+
+  withdrawContract.events.EthClaimed(async (err: any, data: EventData) => {
+    if (err) return
+
+    const usersService = app.service('users')
+    const withdrawNoncesService = app.service('withdraw-nonces')
+  })
 }

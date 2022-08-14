@@ -46,7 +46,11 @@ await userStore.get(walletStore.currentAccount)
               />
             </div>
             <div class="col-6 col-sm-4 col-xxl-3">
-              <BalanceCard :value="userStore.user?.eth" label="Ethereum" />
+              <BalanceCard
+                :value="userStore.user?.eth"
+                type="eth"
+                label="Ethereum"
+              />
             </div>
           </div>
         </div>
