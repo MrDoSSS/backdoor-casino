@@ -15,6 +15,10 @@ export default function (app: Application): void {
     ownerPk,
     ownerAddress,
   } = app.get('web3Options')
+  console.log(collectionContractAddress)
+  console.log(paymentContractAddress)
+  console.log(withdrawContractAddress)
+  console.log(app.get('web3Options'))
   const env = app.get('env')
 
   const providerUrl =
