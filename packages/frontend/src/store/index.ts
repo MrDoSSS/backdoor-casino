@@ -4,6 +4,7 @@ import { useWhitelistStore } from './whitelist'
 import { useAuthStore } from './auth'
 import { setInbrowserProvider } from '@/ethereum'
 import { useTwitterCodeStore } from './twitter-code'
+import { initWeb3 } from '@/web3'
 
 export const pinia = createPinia()
 
@@ -30,6 +31,8 @@ export const initStore: {
       walletStore.connected &&
       authStore.address === walletStore.currentAccount
     ) {
+      initWeb3(walletStore.currentAccount)
+
       const whitelistStore = useWhitelistStore()
       const twitterCodeStore = useTwitterCodeStore()
 

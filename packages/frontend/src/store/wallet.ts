@@ -3,6 +3,7 @@ import { useTwitterCodeStore } from '@/store/twitter-code'
 import { useAuthStore } from '@/store/auth'
 import { defineStore } from 'pinia'
 import { ethereum } from '@/ethereum'
+import { initWeb3 } from '@/web3'
 
 export const useWalletStore = defineStore('wallet', {
   state: () => ({
@@ -32,6 +33,8 @@ export const useWalletStore = defineStore('wallet', {
         this.setCurrentAccount()
 
         if (this.connected) {
+          initWeb3(this.currentAccount)
+
           const authStore = useAuthStore()
           const whitelistStore = useWhitelistStore()
           const twitterCodeStore = useTwitterCodeStore()

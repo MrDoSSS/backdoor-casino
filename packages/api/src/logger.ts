@@ -13,6 +13,7 @@ const logger = createLogger({
     })
   ),
   transports: [
+    new transports.Console(),
     new transports.File({
       filename: 'api.log',
       dirname: 'logs',

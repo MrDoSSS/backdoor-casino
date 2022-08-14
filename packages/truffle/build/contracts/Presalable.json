@@ -1,0 +1,911 @@
+{
+  "contractName": "Presalable",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "Presaled",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "Unpresaled",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "presaled",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.9+commit.e5eed63a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"Presaled\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"Unpresaled\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"presaled\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"events\":{\"Presaled(address)\":{\"details\":\"Emitted when the presale is triggered by `account`.\"},\"Unpresaled(address)\":{\"details\":\"Emitted when the presale is lifted by `account`.\"}},\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/Presalable.sol\":\"Presalable\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":1500},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts/utils/Context.sol\":{\"keccak256\":\"0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://6df0ddf21ce9f58271bdfaa85cde98b200ef242a05a3f85c2bc10a8294800a92\",\"dweb:/ipfs/QmRK2Y5Yc6BK7tGKkgsgn3aJEQGi5aakeSPZvS65PV8Xp3\"]},\"project:/contracts/Presalable.sol\":{\"keccak256\":\"0x332fb8f4b2a1994cdda87366f45c0f63705012230beda96a3e860c36d35360de\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://bcedf949ee8af80a53a7b3a6024a8d7fbc85a8858eaed302c4b11f332170f58e\",\"dweb:/ipfs/QmNWRKz2DFUPt6MVQ5DCL3aMb3ftddCDRYNnSj4tjV7aCQ\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.9;\n\nimport \"@openzeppelin/contracts/utils/Context.sol\";\n\nabstract contract Presalable is Context {\n  /**\n    * @dev Emitted when the presale is triggered by `account`.\n    */\n  event Presaled(address account);\n\n  /**\n    * @dev Emitted when the presale is lifted by `account`.\n    */\n  event Unpresaled(address account);\n\n  bool private _presaled;\n  \n  modifier whenPresaled() {\n    require(_presaled, \"Sale closed\");\n    _;\n  }\n\n  modifier whenNotPresaled() {\n    require(!_presaled, \"Presale closed\");\n    _;\n  }\n\n  function presaled() public view virtual returns (bool) {\n    return _presaled;\n  }\n\n  function _presale() internal virtual whenNotPresaled {\n    _presaled = true;\n    emit Presaled(_msgSender());\n  }\n\n  function _unpresale() internal virtual whenPresaled {\n    _presaled = false;\n    emit Unpresaled(_msgSender());\n  }\n}",
+  "sourcePath": "/Users/doss/Projects/nft-casino/packages/truffle/contracts/Presalable.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/Presalable.sol",
+    "exportedSymbols": {
+      "Context": [
+        282
+      ],
+      "Presalable": [
+        4056
+      ]
+    },
+    "id": 4057,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3983,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".9"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:23:13"
+      },
+      {
+        "absolutePath": "@openzeppelin/contracts/utils/Context.sol",
+        "file": "@openzeppelin/contracts/utils/Context.sol",
+        "id": 3984,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 4057,
+        "sourceUnit": 283,
+        "src": "57:51:13",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": true,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 3985,
+              "name": "Context",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 282,
+              "src": "142:7:13"
+            },
+            "id": 3986,
+            "nodeType": "InheritanceSpecifier",
+            "src": "142:7:13"
+          }
+        ],
+        "canonicalName": "Presalable",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 4056,
+        "linearizedBaseContracts": [
+          4056,
+          282
+        ],
+        "name": "Presalable",
+        "nameLocation": "128:10:13",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 3987,
+              "nodeType": "StructuredDocumentation",
+              "src": "154:73:13",
+              "text": " @dev Emitted when the presale is triggered by `account`."
+            },
+            "id": 3991,
+            "name": "Presaled",
+            "nameLocation": "236:8:13",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3990,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3989,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "253:7:13",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3991,
+                  "src": "245:15:13",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3988,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "245:7:13",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "244:17:13"
+            },
+            "src": "230:32:13"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 3992,
+              "nodeType": "StructuredDocumentation",
+              "src": "266:70:13",
+              "text": " @dev Emitted when the presale is lifted by `account`."
+            },
+            "id": 3996,
+            "name": "Unpresaled",
+            "nameLocation": "345:10:13",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3995,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3994,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "364:7:13",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3996,
+                  "src": "356:15:13",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3993,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "356:7:13",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "355:17:13"
+            },
+            "src": "339:34:13"
+          },
+          {
+            "constant": false,
+            "id": 3998,
+            "mutability": "mutable",
+            "name": "_presaled",
+            "nameLocation": "390:9:13",
+            "nodeType": "VariableDeclaration",
+            "scope": 4056,
+            "src": "377:22:13",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 3997,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "377:4:13",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "visibility": "private"
+          },
+          {
+            "body": {
+              "id": 4006,
+              "nodeType": "Block",
+              "src": "430:51:13",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "id": 4001,
+                        "name": "_presaled",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3998,
+                        "src": "444:9:13",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "hexValue": "53616c6520636c6f736564",
+                        "id": 4002,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "455:13:13",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_7493294cb49ef5ca3d1fe6b4cff635f2c367a96be0cbc3cd6e07377a293de2eb",
+                          "typeString": "literal_string \"Sale closed\""
+                        },
+                        "value": "Sale closed"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_7493294cb49ef5ca3d1fe6b4cff635f2c367a96be0cbc3cd6e07377a293de2eb",
+                          "typeString": "literal_string \"Sale closed\""
+                        }
+                      ],
+                      "id": 4000,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        4294967278,
+                        4294967278
+                      ],
+                      "referencedDeclaration": 4294967278,
+                      "src": "436:7:13",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 4003,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "436:33:13",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 4004,
+                  "nodeType": "ExpressionStatement",
+                  "src": "436:33:13"
+                },
+                {
+                  "id": 4005,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "475:1:13"
+                }
+              ]
+            },
+            "id": 4007,
+            "name": "whenPresaled",
+            "nameLocation": "415:12:13",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 3999,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "427:2:13"
+            },
+            "src": "406:75:13",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 4016,
+              "nodeType": "Block",
+              "src": "512:55:13",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "id": 4011,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "UnaryOperation",
+                        "operator": "!",
+                        "prefix": true,
+                        "src": "526:10:13",
+                        "subExpression": {
+                          "id": 4010,
+                          "name": "_presaled",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 3998,
+                          "src": "527:9:13",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "hexValue": "50726573616c6520636c6f736564",
+                        "id": 4012,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "538:16:13",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_e27b11ed781c3b45a2b4b28e568d9cc44beb1f69fc2a4ad087bd82062bc00435",
+                          "typeString": "literal_string \"Presale closed\""
+                        },
+                        "value": "Presale closed"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_e27b11ed781c3b45a2b4b28e568d9cc44beb1f69fc2a4ad087bd82062bc00435",
+                          "typeString": "literal_string \"Presale closed\""
+                        }
+                      ],
+                      "id": 4009,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        4294967278,
+                        4294967278
+                      ],
+                      "referencedDeclaration": 4294967278,
+                      "src": "518:7:13",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 4013,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "518:37:13",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 4014,
+                  "nodeType": "ExpressionStatement",
+                  "src": "518:37:13"
+                },
+                {
+                  "id": 4015,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "561:1:13"
+                }
+              ]
+            },
+            "id": 4017,
+            "name": "whenNotPresaled",
+            "nameLocation": "494:15:13",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 4008,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "509:2:13"
+            },
+            "src": "485:82:13",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 4024,
+              "nodeType": "Block",
+              "src": "626:27:13",
+              "statements": [
+                {
+                  "expression": {
+                    "id": 4022,
+                    "name": "_presaled",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 3998,
+                    "src": "639:9:13",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "functionReturnParameters": 4021,
+                  "id": 4023,
+                  "nodeType": "Return",
+                  "src": "632:16:13"
+                }
+              ]
+            },
+            "functionSelector": "4cb2f9ea",
+            "id": 4025,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "presaled",
+            "nameLocation": "580:8:13",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 4018,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "588:2:13"
+            },
+            "returnParameters": {
+              "id": 4021,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4020,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4025,
+                  "src": "620:4:13",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 4019,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "620:4:13",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "619:6:13"
+            },
+            "scope": 4056,
+            "src": "571:82:13",
+            "stateMutability": "view",
+            "virtual": true,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 4039,
+              "nodeType": "Block",
+              "src": "710:60:13",
+              "statements": [
+                {
+                  "expression": {
+                    "id": 4032,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 4030,
+                      "name": "_presaled",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3998,
+                      "src": "716:9:13",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "hexValue": "74727565",
+                      "id": 4031,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "bool",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "728:4:13",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "value": "true"
+                    },
+                    "src": "716:16:13",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 4033,
+                  "nodeType": "ExpressionStatement",
+                  "src": "716:16:13"
+                },
+                {
+                  "eventCall": {
+                    "arguments": [
+                      {
+                        "arguments": [],
+                        "expression": {
+                          "argumentTypes": [],
+                          "id": 4035,
+                          "name": "_msgSender",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 272,
+                          "src": "752:10:13",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
+                            "typeString": "function () view returns (address)"
+                          }
+                        },
+                        "id": 4036,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "752:12:13",
+                        "tryCall": false,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 4034,
+                      "name": "Presaled",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3991,
+                      "src": "743:8:13",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_address_$returns$__$",
+                        "typeString": "function (address)"
+                      }
+                    },
+                    "id": 4037,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "743:22:13",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 4038,
+                  "nodeType": "EmitStatement",
+                  "src": "738:27:13"
+                }
+              ]
+            },
+            "id": 4040,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "id": 4028,
+                "kind": "modifierInvocation",
+                "modifierName": {
+                  "id": 4027,
+                  "name": "whenNotPresaled",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 4017,
+                  "src": "694:15:13"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "694:15:13"
+              }
+            ],
+            "name": "_presale",
+            "nameLocation": "666:8:13",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 4026,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "674:2:13"
+            },
+            "returnParameters": {
+              "id": 4029,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "710:0:13"
+            },
+            "scope": 4056,
+            "src": "657:113:13",
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 4054,
+              "nodeType": "Block",
+              "src": "826:63:13",
+              "statements": [
+                {
+                  "expression": {
+                    "id": 4047,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 4045,
+                      "name": "_presaled",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3998,
+                      "src": "832:9:13",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "hexValue": "66616c7365",
+                      "id": 4046,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "bool",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "844:5:13",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "value": "false"
+                    },
+                    "src": "832:17:13",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 4048,
+                  "nodeType": "ExpressionStatement",
+                  "src": "832:17:13"
+                },
+                {
+                  "eventCall": {
+                    "arguments": [
+                      {
+                        "arguments": [],
+                        "expression": {
+                          "argumentTypes": [],
+                          "id": 4050,
+                          "name": "_msgSender",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 272,
+                          "src": "871:10:13",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
+                            "typeString": "function () view returns (address)"
+                          }
+                        },
+                        "id": 4051,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "871:12:13",
+                        "tryCall": false,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 4049,
+                      "name": "Unpresaled",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3996,
+                      "src": "860:10:13",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_address_$returns$__$",
+                        "typeString": "function (address)"
+                      }
+                    },
+                    "id": 4052,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "860:24:13",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 4053,
+                  "nodeType": "EmitStatement",
+                  "src": "855:29:13"
+                }
+              ]
+            },
+            "id": 4055,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "id": 4043,
+                "kind": "modifierInvocation",
+                "modifierName": {
+                  "id": 4042,
+                  "name": "whenPresaled",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 4007,
+                  "src": "813:12:13"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "813:12:13"
+              }
+            ],
+            "name": "_unpresale",
+            "nameLocation": "783:10:13",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 4041,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "793:2:13"
+            },
+            "returnParameters": {
+              "id": 4044,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "826:0:13"
+            },
+            "scope": 4056,
+            "src": "774:115:13",
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 4057,
+        "src": "110:781:13",
+        "usedErrors": []
+      }
+    ],
+    "src": "32:859:13"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.9+commit.e5eed63a.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.7",
+  "updatedAt": "2022-08-13T23:13:43.477Z",
+  "devdoc": {
+    "events": {
+      "Presaled(address)": {
+        "details": "Emitted when the presale is triggered by `account`."
+      },
+      "Unpresaled(address)": {
+        "details": "Emitted when the presale is lifted by `account`."
+      }
+    },
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

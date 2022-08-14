@@ -1,5 +1,9 @@
 import { Application } from './declarations'
 import Web3 from 'web3'
+import { AbiItem } from 'web3-utils'
+import { abi as collectionAbi } from '../../truffle/build/contracts/Casino.json'
+import { abi as paymentAbi } from '../../truffle/build/contracts/Payment.json'
+import { abi as withdrawAbi } from '../../truffle/build/contracts/Withdraw.json'
 
 export default function (app: Application): void {
   const {
@@ -30,9 +34,27 @@ export default function (app: Application): void {
     privateKey: ownerPk,
   })
 
-  const collectionContract = { collectionContractAddress }
-  const paymentContract = { paymentContractAddress }
-  const withdrawContract = { withdrawContractAddress }
+  const collectionContract = new web3.eth.Contract(
+    collectionAbi as unknown as AbiItem,
+    collectionContractAddress,
+    {
+      from: ownerAddress,
+    }
+  )
+  const paymentContract = new web3.eth.Contract(
+    paymentAbi as unknown as AbiItem,
+    paymentContractAddress,
+    {
+      from: ownerAddress,
+    }
+  )
+  const withdrawContract = new web3.eth.Contract(
+    withdrawAbi as unknown as AbiItem,
+    withdrawContractAddress,
+    {
+      from: ownerAddress,
+    }
+  )
 
   app.set('web3Client', web3)
   app.set('web3Account', account)

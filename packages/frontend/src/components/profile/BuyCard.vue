@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { estimateGas } from '@/utils'
+import { web3, paymentContract } from '@/web3'
+import { ref } from 'vue'
 
 interface Props {
   size: 'small' | 'medium' | 'big'
@@ -7,21 +9,36 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const loading = ref(false)
 
-const amountMap = {
-  small: 100,
-  medium: 400,
-  big: 1000,
+const amount = await paymentContract.methods
+  .amounts(props.size)
+  .call()
+  .then(parseInt)
+  .catch(() => 0)
+const price = await paymentContract.methods
+  .prices(props.size)
+  .call()
+  .then(parseInt)
+const priceInEth = web3.utils.fromWei(price.toString(), 'ether')
+
+const buy = async () => {
+  try {
+    loading.value = true
+    const method = paymentContract.methods.purchaseChips(props.size)
+    const gas = await estimateGas(method, 40000, { value: price })
+    await method.send({
+      value: price,
+      gas,
+      maxPriorityFeePerGas: null,
+      maxFeePerGas: null,
+    })
+  } catch (e) {
+    console.log(e)
+  } finally {
+    loading.value = false
+  }
 }
-
-const priceMap = {
-  small: 0.02,
-  medium: 0.05,
-  big: 0.1,
-}
-
-const amount = computed(() => amountMap[props.size])
-const price = computed(() => priceMap[props.size])
 </script>
 
 <template>
@@ -30,9 +47,13 @@ const price = computed(() => priceMap[props.size])
     <div class="buy-card-content">
       <img src="/profile/money.png" alt="" />
       <div class="buy-card-title text-success">{{ amount }}x Playing Chips</div>
-      <div>Only {{ price }} ETH</div>
+      <div>Only {{ priceInEth }} ETH</div>
     </div>
-    <button class="buy-card-btn d-block text-center">
+    <button
+      class="buy-card-btn d-block text-center"
+      @click="buy"
+      :disabled="loading"
+    >
       Buy <img src="/profile/cart.svg" alt="" />
     </button>
   </div>

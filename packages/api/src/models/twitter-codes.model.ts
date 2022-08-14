@@ -6,7 +6,7 @@ import { Application } from '../declarations'
 import { Model, Mongoose } from 'mongoose'
 
 export default function (app: Application): Model<any> {
-  const modelName = 'twitterCodes'
+  const modelName = 'twitter_codes'
   const mongooseClient: Mongoose = app.get('mongooseClient')
   const { Schema } = mongooseClient
   const schema = new Schema(

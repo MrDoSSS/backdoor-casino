@@ -4,7 +4,6 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import Modal from './Modal.vue'
 import { setInbrowserProvider, setWalletLinkProvider } from '@/ethereum'
 import { useWalletStore } from '@/store/wallet'
-import { initWeb3 } from '@/web3'
 
 const modalRef = ref()
 const loading = ref(false)
@@ -36,7 +35,6 @@ const connectCoinbase = () => {
 const connect = async () => {
   try {
     loading.value = true
-    initWeb3()
     await walletStore.connect()
     modalRef.value.hide()
   } finally {
