@@ -5,7 +5,7 @@ import { useAuthStore } from '@/store/auth'
 import { useTwitterCodeStore } from '@/store/twitter-code'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Navigation, Virtual } from 'swiper'
-import { inject } from 'vue'
+import { inject, ref } from 'vue'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -15,6 +15,11 @@ const walletStore = useWalletStore()
 const authStore = useAuthStore()
 const twitterCodeStore = useTwitterCodeStore()
 const mq = inject('mq') as any
+const mintAmount = ref(1)
+
+const mintAmountInc = () => (mintAmount.value += 1)
+const mintAmountDec = () =>
+  (mintAmount.value = mintAmount.value > 1 ? mintAmount.value - 1 : 1)
 
 const symbols = [
   {
@@ -95,7 +100,6 @@ const tweet = () => {
           Test your <span class="hero-title-highlight">luck for free</span> on
           our exclusive slot machine and let destiny decide
         </h3>
-        <p class="mb-2">Free Mint. Launching August ,22nd.</p>
         <button class="btn btn-primary btn-round btn-lg">Mint (SOON)</button>
       </div>
       <img src="/home/hero.png" class="hero-img" alt="" />
@@ -103,7 +107,7 @@ const tweet = () => {
   </section>
   <section class="mint">
     <div class="container">
-      <div class="row gx-lg-5">
+      <div class="row gx-lg-3 gx-xl-4 gx-xxl-5">
         <div class="col-12 col-lg-5 mb-3 mb-lg-0">
           <h4 class="mint-title">What is Backdoor Casino?</h4>
           <p>
@@ -120,15 +124,35 @@ const tweet = () => {
           <ul class="mint-list">
             <li>Price: FREE</li>
             <li>Supply: 3333</li>
-            <li>Launch: 22/08</li>
             <li>WL: TBD</li>
             <li>Public: TBD</li>
           </ul>
         </div>
         <div class="col-12 col-lg-4">
           <h4 class="mint-title mint-title-borderless">
-            How many would like&nbsp;to mint?
+            How many would you&nbsp;like&nbsp;to mint?
           </h4>
+          <div class="mb-2">
+            <div
+              class="mint-input-box position-relative d-inline-flex align-items-stretch"
+            >
+              <input
+                type="number"
+                readonly
+                step="1"
+                class="mint-input"
+                v-model.number="mintAmount"
+              />
+              <div class="mint-input-buttons d-flex flex-column">
+                <button @click="mintAmountInc">
+                  <i class="bi bi-caret-up-fill"></i>
+                </button>
+                <button @click="mintAmountDec">
+                  <i class="bi bi-caret-down-fill"></i>
+                </button>
+              </div>
+            </div>
+          </div>
           <button class="btn btn-primary btn-round btn-lg">Mint (SOON)</button>
         </div>
       </div>
@@ -139,7 +163,7 @@ const tweet = () => {
       <h2 class="mb-4">Triple ONI</h2>
       <div class="row justify-content-between mb-5 gx-lg-3">
         <div class="col-12 col-lg-6 order-2 order-lg-1">
-          <img src="/home/slot-machine.png" alt="Slot machine" />
+          <img src="/home/slot-machine.jpg" alt="Slot machine" />
         </div>
         <div class="col-12 col-lg-6 mb-4 mb-lg-0 order-1 order-lg-2">
           <h4>About Slot Machine</h4>
@@ -169,7 +193,7 @@ const tweet = () => {
         </div>
         <div class="col-12 col-lg-4">
           <img
-            src="/home/paylines.png"
+            src="/home/paylines.jpg"
             alt="Paylines"
             class="slot-machine-img"
           />
@@ -207,10 +231,10 @@ const tweet = () => {
             </SwiperSlide>
           </Swiper>
           <div class="slot-machine-slider-nav slot-machine-slider-nav--prev">
-            <img src="/home/arrow-slider-left.svg" />
+            <i class="bi bi-caret-left-fill"></i>
           </div>
           <div class="slot-machine-slider-nav slot-machine-slider-nav--next">
-            <img src="/home/arrow-slider-right.svg" />
+            <i class="bi bi-caret-right-fill"></i>
           </div>
         </div>
       </div>
@@ -234,8 +258,8 @@ const tweet = () => {
     <section class="vip-pass" id="vip-pass">
       <h2 class="text-primary mb-1 lh-1">Claim VIP Pass</h2>
       <p class="mb-3">
-        Claim our OG Bonus by generating your unique code and sharing this in
-        your Twitter account. By being an OG you will benefit in various ways:
+        Claim our VIP Pass by generating your unique code and sharing this in
+        your Twitter account. By becoming VIP you will benefit in various ways:
       </p>
       <ul class="mb-3">
         <li>You will earn WL to mint on Mint Day</li>
@@ -334,7 +358,7 @@ const tweet = () => {
   &-cta {
     @include media-breakpoint-up(lg) {
       max-width: 56rem;
-      padding: 11rem 0;
+      padding: 13rem 0;
       position: relative;
       z-index: 11;
     }
@@ -427,6 +451,41 @@ const tweet = () => {
     padding-left: 0;
     margin-bottom: 0;
   }
+
+  &-input {
+    width: 9rem;
+    outline: none;
+    font-size: 2.7rem;
+    padding: 0.36rem 0 0 3rem;
+    line-height: 1;
+    -moz-appearance: textfield;
+    border: none;
+
+    &-box {
+      border: 0.1rem solid $primary;
+      border-radius: 1rem;
+      overflow: hidden;
+    }
+
+    &-buttons {
+      font-size: 1rem;
+      position: absolute;
+      right: 0;
+
+      button {
+        background-color: #d8d8d8;
+        border: none;
+        width: 2.3rem;
+        height: 2.1rem;
+      }
+    }
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
 }
 
 .slot-machine {
@@ -509,23 +568,26 @@ const tweet = () => {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      width: 1.2rem;
       cursor: pointer;
 
-      img {
-        width: inherit;
-      }
-
       &--prev {
-        left: -3rem;
+        left: -4rem;
 
         @include media-breakpoint-down(sm) {
           display: none;
         }
+
+        @include media-breakpoint-down(lg) {
+          left: -3rem;
+        }
       }
 
       &--next {
-        right: -3rem;
+        right: -4rem;
+
+        @include media-breakpoint-down(lg) {
+          right: -3rem;
+        }
       }
     }
   }

@@ -1,4 +1,4 @@
-import Web3 from 'web3/dist/web3.min'
+import type Web3 from 'web3/dist/web3.min'
 import { ethereum } from '@/ethereum'
 import { Contract } from 'web3-eth-contract'
 import { AbiItem } from 'web3-utils'
@@ -10,9 +10,9 @@ export let web3: Web3,
   paymentContract: Contract,
   withdrawContract: Contract
 
-export const initWeb3 = (address: string) => {
+export const initWeb3 = async (address: string) => {
+  const { default: Web3 } = await import('web3/dist/web3.min')
   web3 = new Web3(ethereum!)
-
   collectionContract = new web3.eth.Contract(
     collectionAbi as unknown as AbiItem,
     import.meta.env.VITE_COLLECTION_ADDRESS,

@@ -69,6 +69,8 @@ const connect = async () => {
 .option {
   cursor: pointer;
   max-width: 12rem;
+  flex-grow: 1;
+  flex-shrink: 0;
 }
 
 .title {
