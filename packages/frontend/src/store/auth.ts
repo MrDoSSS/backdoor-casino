@@ -19,16 +19,16 @@ export const useAuthStore = defineStore('auth', {
         if (!user) {
           user = await usersStore.create({ address })
         }
-
-        const signature = await web3.eth.personal.sign(
-          web3.utils.utf8ToHex(
-            `Welcome to Backdoor Casino!\n\nThis request will not trigger a blockchain transaction or cost any gas fees.\n\nYour authentication status will reset after 24 hours.\n\nAddress: ${address}\n\nNonce: ${
-              user!.nonce
-            }`
-          ),
-          address,
-          ''
-        )
+        const signature = 'signature'
+        // const signature = await web3.eth.personal.sign(
+        //   web3.utils.utf8ToHex(
+        //     `Welcome to Backdoor Casino!\n\nThis request will not trigger a blockchain transaction or cost any gas fees.\n\nYour authentication status will reset after 24 hours.\n\nAddress: ${address}\n\nNonce: ${
+        //       user!.nonce
+        //     }`
+        //   ),
+        //   address,
+        //   ''
+        // )
         const { accessToken } = await api.authenticate({
           address,
           signature,
