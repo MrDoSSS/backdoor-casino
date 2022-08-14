@@ -3,7 +3,6 @@ import Web3 from 'web3'
 import { AbiItem } from 'web3-utils'
 import { abi as collectionAbi } from '../../truffle/build/contracts/Casino.json'
 import { abi as paymentAbi } from '../../truffle/build/contracts/Payment.json'
-import { abi as withdrawAbi } from '../../truffle/build/contracts/Withdraw.json'
 
 export default function (app: Application): void {
   const {
@@ -11,7 +10,6 @@ export default function (app: Application): void {
     infuraProjectId,
     collectionContractAddress,
     paymentContractAddress,
-    withdrawContractAddress,
     ownerPk,
     ownerAddress,
   } = app.get('web3Options')
@@ -51,17 +49,8 @@ export default function (app: Application): void {
     }
   )
 
-  const withdrawContract = new web3.eth.Contract(
-    withdrawAbi as unknown as AbiItem,
-    withdrawContractAddress,
-    {
-      from: ownerAddress,
-    }
-  )
-
   app.set('web3Client', web3)
   app.set('web3Account', account)
   app.set('web3CollectionContract', collectionContract)
   app.set('web3PaymentContract', paymentContract)
-  app.set('web3WithdrawContract', withdrawContract)
 }

@@ -28,7 +28,6 @@
     "infuraProjectId": "INFURA_PROJECT_ID",
     "collectionContractAddress": "COLLECTION_CONTRACT_ADDRESS",
     "paymentContractAddress": "PAYMENT_CONTRACT_ADDRESS",
-    "withdrawContractAddress": "WITHDRAW_CONTRACT_ADDRESS",
     "ownerPk": "CONTRACT_OWNER_PK",
     "ownerAddress": "CONTRACT_OWNER_ADDRESS"
   }

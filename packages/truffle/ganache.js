@@ -1,6 +1,7 @@
 const ganache = require('ganache')
 const accountKeys = require('./account-keys.json')
 const Web3 = require('web3')
+const path = require('path')
 
 const accounts = Object.values(accountKeys.private_keys).map((secretKey) => ({
   secretKey,
@@ -10,6 +11,9 @@ const accounts = Object.values(accountKeys.private_keys).map((secretKey) => ({
 const options = {
   wallet: {
     accounts,
+  },
+  database: {
+    dbPath: path.join(__dirname, 'ganache-db'),
   },
 }
 const server = ganache.server(options)

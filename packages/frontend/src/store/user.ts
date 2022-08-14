@@ -8,8 +8,6 @@ type User = {
   unclaimedPlayingChips: number
   prizeTickets: number
   eth: string
-  lockedEth: string
-  availableEth: string
   nonce: number
 }
 

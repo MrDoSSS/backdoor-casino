@@ -3,7 +3,6 @@ import { EventData } from 'web3-eth-contract'
 
 export default function (app: Application): void {
   const paymentContract = app.get('web3PaymentContract')
-  const withdrawContract = app.get('web3WithdrawContract')
 
   paymentContract.events.ChipsPurchased(async (err: any, data: EventData) => {
     if (err) return
@@ -20,12 +19,5 @@ export default function (app: Application): void {
     }
 
     usersService.patch(address, { playingChips: user.playingChips + amount })
-  })
-
-  withdrawContract.events.EthClaimed(async (err: any, data: EventData) => {
-    if (err) return
-
-    const usersService = app.service('users')
-    const withdrawNoncesService = app.service('withdraw-nonces')
   })
 }

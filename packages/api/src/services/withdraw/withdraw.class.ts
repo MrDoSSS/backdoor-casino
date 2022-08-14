@@ -25,53 +25,43 @@ export class Withdraw {
     }
 
     this.lock.add(params.user!.address)
-    const usersService = this.app.service('users')
-    const web3 = this.app.get('web3Client')
-    const account = this.app.get('web3Account')
-
-    const user = await usersService.get(params.user!.address)
-    const amount = web3.utils.toBN(
-      web3.utils.toWei(data.amount.toString(), 'ether')
-    )
-    let lockedEth = web3.utils.toBN(user.lockedEth)
 
     try {
-      if (amount.gt(web3.utils.toBN(user.availableEth))) {
+      const usersService = this.app.service('users')
+      const web3 = this.app.get('web3Client')
+      const account = this.app.get('web3Account')
+
+      const user = await usersService.get(params.user!.address)
+      const amount = web3.utils.toBN(
+        web3.utils.toWei(data.amount.toString(), 'ether')
+      )
+
+      if (amount.gt(web3.utils.toBN(user.eth))) {
         throw new PaymentError('You do not have enough eth')
       }
 
-      lockedEth = lockedEth.add(amount)
-      await usersService.patch(user.address, {
-        lockedEth: lockedEth.toString(),
-      })
-
       const gasAmount = 21000
       const gasPrice = await web3.eth.getGasPrice()
-      const fee = gasPrice * gasAmount
+      const fee = web3.utils.toBN(gasPrice * gasAmount)
+
+      if (amount.sub(fee).isZero() || amount.sub(fee).isNeg()) {
+        throw new PaymentError('You do not have enough eth fee')
+      }
 
       const tx = await web3.eth.sendTransaction({
         from: account.address,
         to: user.address,
         gas: 21000,
-        value: amount.sub(web3.utils.toBN(fee)).toString(),
+        value: amount.sub(fee).toString(),
       })
 
-      lockedEth = lockedEth.sub(amount)
-
       await usersService.patch(user.address, {
-        lockedEth: lockedEth.toString(),
         eth: web3.utils.toBN(user.eth).sub(amount).toString(),
       })
 
       return tx
     } catch (e) {
-      if (e instanceof PaymentError) throw e
-
-      await usersService.patch(user.address, {
-        lockedEth: lockedEth.sub(amount).toString(),
-      })
-
-      return null
+      throw e
     } finally {
       this.lock.delete(params.user!.address)
     }

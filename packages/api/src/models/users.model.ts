@@ -34,10 +34,6 @@ export default function (app: Application): Model<any> {
         type: String,
         default: '0',
       },
-      lockedEth: {
-        type: String,
-        default: '0',
-      },
     },
     {
       timestamps: true,
@@ -51,13 +47,6 @@ export default function (app: Application): Model<any> {
   )
 
   const web3 = app.get('web3Client')
-
-  schema.virtual('availableEth').get(function () {
-    return web3.utils
-      .toBN(this.eth)
-      .sub(web3.utils.toBN(this.lockedEth))
-      .toString()
-  })
 
   schema.plugin(leanPlugin)
 

@@ -1,3 +1,4 @@
 node_modules
 .env
 account-keys.json
+ganache-db

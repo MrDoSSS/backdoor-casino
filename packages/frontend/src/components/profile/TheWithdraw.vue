@@ -8,14 +8,10 @@ const loading = ref(false)
 
 const userStore = useUserStore()
 
-const availableEth = computed(() =>
-  parseFloat(web3.utils.fromWei(userStore.user!.availableEth, 'ether'))
+const eth = computed(() =>
+  parseFloat(web3.utils.fromWei(userStore.user!.eth, 'ether'))
 )
-const lockedEth = computed(() =>
-  parseFloat(web3.utils.fromWei(userStore.user!.lockedEth, 'ether'))
-)
-
-const amount = ref(availableEth.value)
+const amount = ref(eth.value)
 
 const withdraw = async () => {
   try {
@@ -31,22 +27,18 @@ const withdraw = async () => {
 
 <template>
   <div class="mb-1 lh-1">
-    Available Balance:
-    <span class="ms-1">{{ availableEth }} ETH</span>
-  </div>
-  <div class="mb-1 lh-1">
-    Locked Balance:
-    <span class="ms-1">{{ lockedEth }} ETH</span>
+    Current Balance:
+    <span class="ms-1">{{ eth }} ETH</span>
   </div>
   <div class="mb-2 lh-1">
     Withdraw Amount:
     <span class="ms-1"
-      ><input type="number" :max="availableEth" step="0.01" v-model="amount"
+      ><input type="number" :max="eth" step="0.01" v-model="amount"
     /></span>
   </div>
   <button
     class="btn btn-primary btn-sm"
-    :disabled="availableEth === 0 || loading"
+    :disabled="eth === 0 || loading"
     @click="withdraw"
   >
     Request Withdraw
