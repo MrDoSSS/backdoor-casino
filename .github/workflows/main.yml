@@ -45,9 +45,10 @@ jobs:
             cd ~/backdoor-casino
             git pull origin main
             cd packages/api
+            pm2 stop api
             yarn install --frozen-lockfile
             yarn compile
-            NODE_APP_INSTANCE=$NODE_APP_INSTANCE pm2 start
+            pm2 restart api --update-env
       - name: Build frontend
         uses: appleboy/ssh-action@master
         with:
