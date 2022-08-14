@@ -14,6 +14,9 @@ jobs:
         env:
           CONTRACT_OWNER_ADDRESS: ${{ secrets.CONTRACT_OWNER_ADDRESS }}
           CONTRACT_OWNER_PK: ${{ secrets.CONTRACT_OWNER_PK }}
+          COLLECTION_CONTRACT_ADDRESS: ${{ secrets.COLLECTION_CONTRACT_ADDRESS }}
+          PAYMENT_CONTRACT_ADDRESS: ${{ secrets.PAYMENT_CONTRACT_ADDRESS }}
+          WITHDRAW_CONTRACT_ADDRESS: ${{ secrets.WITHDRAW_CONTRACT_ADDRESS }}
           MONGODB_URL: ${{ secrets.MONGODB_URL }}
           NODE_ENV: production
           NODE_APP_INSTANCE: 1
@@ -22,7 +25,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          envs: CONTRACT_OWNER_ADDRESS,CONTRACT_OWNER_PK,MONGODB_URL,NODE_ENV,NODE_APP_INSTANCE
+          envs: CONTRACT_OWNER_ADDRESS,CONTRACT_OWNER_PK,COLLECTION_CONTRACT_ADDRESS,PAYMENT_CONTRACT_ADDRESS,WITHDRAW_CONTRACT_ADDRESS,MONGODB_URL,NODE_ENV,NODE_APP_INSTANCE
           script: |
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
