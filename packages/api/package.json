@@ -25,7 +25,7 @@
   "scripts": {
     "lint": "eslint src/. test/. --config .eslintrc.json --ext .ts --fix",
     "dev": "ts-node-dev --no-notify src/",
-    "start": "node lib/",
+    "start": "node lib/api/src/",
     "jest": "jest --forceExit",
     "compile": "shx rm -rf lib/ && tsc"
   },
