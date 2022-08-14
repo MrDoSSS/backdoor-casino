@@ -45,6 +45,7 @@ export default function (app: Application): void {
       from: ownerAddress,
     }
   )
+
   const paymentContract = new web3.eth.Contract(
     paymentAbi as unknown as AbiItem,
     paymentContractAddress,
@@ -52,6 +53,7 @@ export default function (app: Application): void {
       from: ownerAddress,
     }
   )
+
   const withdrawContract = new web3.eth.Contract(
     withdrawAbi as unknown as AbiItem,
     withdrawContractAddress,
