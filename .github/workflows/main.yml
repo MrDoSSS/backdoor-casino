@@ -47,7 +47,7 @@ jobs:
             cd packages/api
             yarn install --frozen-lockfile
             yarn compile
-            pm2 start
+            NODE_APP_INSTANCE=$NODE_APP_INSTANCE pm2 start
       - name: Build frontend
         uses: appleboy/ssh-action@master
         with:
