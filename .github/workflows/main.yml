@@ -39,6 +39,7 @@ jobs:
             NODE_ENV
             NODE_APP_INSTANCE
           script: |
+            echo "$COLLECTION_CONTRACT_ADDRESS"
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
             nvm use 16
