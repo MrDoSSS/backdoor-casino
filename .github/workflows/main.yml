@@ -18,6 +18,8 @@ jobs:
           PAYMENT_CONTRACT_ADDRESS: ${{ secrets.PAYMENT_CONTRACT_ADDRESS }}
           WITHDRAW_CONTRACT_ADDRESS: ${{ secrets.WITHDRAW_CONTRACT_ADDRESS }}
           MONGODB_URL: ${{ secrets.MONGODB_URL }}
+          ETH_NETWORK: ${{ secrets.ETH_NETWORK }}
+          INFURA_PROJECT_ID: ${{ secrets.INFURA_PROJECT_ID }}
           NODE_ENV: production
           NODE_APP_INSTANCE: 1
         with:
@@ -25,7 +27,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          envs: CONTRACT_OWNER_ADDRESS,CONTRACT_OWNER_PK,COLLECTION_CONTRACT_ADDRESS,PAYMENT_CONTRACT_ADDRESS,WITHDRAW_CONTRACT_ADDRESS,MONGODB_URL,NODE_ENV,NODE_APP_INSTANCE
+          envs: CONTRACT_OWNER_ADDRESS,CONTRACT_OWNER_PK,COLLECTION_CONTRACT_ADDRESS,PAYMENT_CONTRACT_ADDRESS,WITHDRAW_CONTRACT_ADDRESS,MONGODB_URL,ETH_NETWORK,INFURA_PROJECT_ID,NODE_ENV,NODE_APP_INSTANCE
           script: |
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
