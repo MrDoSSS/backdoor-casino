@@ -80,7 +80,7 @@ const generateCode = async () => {
 const tweet = () => {
   const params =
     'scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=600,height=600'
-  const text = `Backdoor Casino Opening ♠️\n\nFirst ever NFT Slot Machine\n\nJoin VIP List: backdoorcasino.xyz\n\n🎰 Code: ${twitterCodeStore.code}\n\nFree mint soon\n\n`
+  const text = `Backdoor Casino Opening ♠️\n\nFirst ever NFT Slot Machine\n\nJoin VIP List: backdoornft.xyz\n\n🎰 Code: ${twitterCodeStore.code}\n\nFree mint soon\n\n`
   const url = `https://twitter.com/intent/tweet?text=${encodeURI(
     text
   )}&hashtags=backdoorcasino&via=backdoorcasino`
