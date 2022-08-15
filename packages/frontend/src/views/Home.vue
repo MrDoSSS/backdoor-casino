@@ -268,6 +268,12 @@ const tweet = () => {
           free on our Slot Machine
         </li>
       </ul>
+      <button
+        class="btn btn-success btn-round btn-lg btn-bordered me-2"
+        @click="tweet"
+      >
+        Tweet it!
+      </button>
       <template v-if="walletStore.connected && authStore.loggedIn">
         <div class="d-flex align-items-center" v-if="twitterCodeStore.exists">
           <button
