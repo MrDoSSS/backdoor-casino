@@ -64,7 +64,10 @@ onUnmounted(() => {
           <a class="nav-link" @click.prevent="smoothScroll" href="#faq">FAQ</a>
         </li>
         <li class="nav-item d-lg-none">
-          <a class="nav-link" href="https://twitter.com" target="_blank"
+          <a
+            class="nav-link"
+            href="https://twitter.com/backdoorcasino"
+            target="_blank"
             ><i class="bi bi-twitter"></i>
           </a>
         </li>
@@ -99,7 +102,10 @@ onUnmounted(() => {
           </button>
         </li>
         <li class="nav-item d-none d-lg-block">
-          <a class="nav-link" href="https://twitter.com" target="_blank"
+          <a
+            class="nav-link"
+            href="https://twitter.com/backdoorcasino"
+            target="_blank"
             ><i class="bi bi-twitter"></i>
           </a>
         </li>

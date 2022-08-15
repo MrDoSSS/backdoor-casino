@@ -81,14 +81,14 @@ const tweet = () => {
   const params =
     'scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=600,height=600'
   const text = `Backdoor Casino Opening ♠️\n\nFirst ever NFT Slot Machine\n\nJoin VIP List: backdoorcasino.xyz\n\n🎰 Code: ${twitterCodeStore.code}\n\nFree mint soon\n\n`
-
-  window.open(
-    `https://twitter.com/intent/tweet?text=${encodeURI(
-      text
-    )}&hashtags=backdoorcasino&via=backdoorcasino`,
-    '',
-    params
-  )
+  const url = `https://twitter.com/intent/tweet?text=${encodeURI(
+    text
+  )}&hashtags=backdoorcasino&via=backdoorcasino`
+  if (mq.lgPlus) {
+    window.open(url, '', params)
+  } else {
+    window.location.href = url
+  }
 }
 </script>
 
