@@ -13,9 +13,12 @@ const app = createApp(App)
   .use(initStore)
   .use(Vue3Mq, { preset: 'bootstrap5' })
 
-initStore.isReady().then(() => {
-  setTimeout(() => {
-    document.querySelector('#loading-app')?.remove()
-    app.use(router).mount('#app')
-  }, 1000)
+initStore.isReady().finally(() => {
+  app.use(router)
+  router.isReady().finally(() => {
+    setTimeout(() => {
+      document.querySelector('#loading-app')?.remove()
+      app.mount('#app')
+    }, 1000)
+  })
 })

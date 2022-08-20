@@ -1,5 +1,5 @@
 <template>
-  <footer class="text-center py-2">
+  <footer id="the-footer" class="text-center py-2">
     Backdoor Casino. All rights reserved.
   </footer>
 </template>

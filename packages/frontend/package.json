@@ -19,6 +19,7 @@
     "feathers-hooks-common": "^6.1.5",
     "lodash": "^4.17.21",
     "mitt": "^3.0.0",
+    "phaser": "^3.55.2",
     "pinia": "^2.0.18",
     "swiper": "^8.3.2",
     "vue": "^3.2.37",

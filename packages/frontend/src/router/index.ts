@@ -41,9 +41,9 @@ const routes: Array<RouteRecordRaw> = [
         path: 'play',
         name: 'play',
         component: () => import('@/views/Play.vue'),
-        meta: {
-          guard: ['authorized'],
-        },
+        // meta: {
+        //   guard: ['authorized'],
+        // },
       },
     ],
   },

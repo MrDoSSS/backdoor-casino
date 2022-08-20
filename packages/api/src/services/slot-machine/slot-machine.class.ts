@@ -1,5 +1,5 @@
 import { Params } from '@feathersjs/feathers'
-import { PaymentError } from '@feathersjs/errors'
+import { PaymentError, TooManyRequests } from '@feathersjs/errors'
 import { Application } from '../../declarations'
 import Chance from 'chance'
 import omit from 'lodash/omit'
@@ -128,15 +128,15 @@ const SYMBOLS: Symbol[] = [
 
 const PAYLINES: Payline[] = [
   {
-    combination: [0, 0, 0, 1, 1, 1, 0, 0, 0],
+    combination: [0, 1, 0, 0, 1, 0, 0, 1, 0],
     tier: 1,
   },
   {
-    combination: [1, 1, 1, 0, 0, 0, 0, 0, 0],
+    combination: [1, 0, 0, 1, 0, 0, 1, 0, 0],
     tier: 1,
   },
   {
-    combination: [0, 0, 0, 0, 0, 0, 1, 1, 1],
+    combination: [0, 0, 1, 0, 0, 1, 0, 0, 1],
     tier: 1,
   },
   {
@@ -148,19 +148,19 @@ const PAYLINES: Payline[] = [
     tier: 1,
   },
   {
-    combination: [1, 0, 1, 0, 1, 0, 0, 0, 0],
+    combination: [1, 0, 0, 0, 1, 0, 1, 0, 0],
     tier: 2,
   },
   {
-    combination: [0, 0, 0, 1, 0, 1, 0, 1, 0],
+    combination: [0, 1, 0, 0, 0, 1, 0, 1, 0],
     tier: 2,
   },
   {
-    combination: [0, 1, 0, 1, 0, 1, 0, 0, 0],
+    combination: [0, 1, 0, 1, 0, 0, 0, 1, 0],
     tier: 2,
   },
   {
-    combination: [0, 0, 0, 0, 1, 0, 1, 0, 1],
+    combination: [0, 0, 1, 0, 1, 0, 0, 0, 1],
     tier: 2,
   },
   {
@@ -168,11 +168,11 @@ const PAYLINES: Payline[] = [
     tier: 2,
   },
   {
-    combination: [1, 0, 0, 0, 1, 1, 1, 0, 0],
+    combination: [1, 0, 1, 0, 1, 0, 0, 1, 0],
     tier: 2,
   },
   {
-    combination: [0, 0, 1, 1, 1, 0, 0, 0, 1],
+    combination: [0, 1, 0, 0, 1, 0, 1, 0, 1],
     tier: 2,
   },
   {
@@ -186,48 +186,93 @@ const WIN_CHANCE = 33
 export class SlotMachine {
   app: Application
   options: ServiceOptions
+  lock = new Set<string>()
 
   constructor(options: ServiceOptions = {}, app: Application) {
     this.options = options
     this.app = app
   }
 
-  async create(data: Data, params?: Params): Promise<Result> {
-    const userService = this.app.service('users')
-    const user = await userService.get(params!.user!.address)
-
-    if (user.playingChips <= 0) {
-      throw new PaymentError('You do not have enough playing chips')
+  async create(data: Data, params: Params): Promise<Result> {
+    if (this.lock.has(params.user!.address)) {
+      throw new TooManyRequests()
     }
 
-    const { bool, weighted, pickone } = Chance()
-    const win = bool({ likelihood: WIN_CHANCE })
+    this.lock.add(params.user!.address)
 
-    if (!win) {
-      return {
-        win: false,
+    try {
+      const usersService = this.app.service('users')
+      const user = await usersService.get(params!.user!.address)
+      const web3 = this.app.get('web3Client')
+
+      if (user.playingChips <= 0) {
+        throw new PaymentError('You do not have enough playing chips')
       }
+
+      await usersService.patch(user.address, {
+        playingChips: user.playingChips - 1,
+      })
+
+      const chance = Chance()
+      const win = chance.bool({ likelihood: WIN_CHANCE })
+      const pathData: {
+        playingChips: number
+        prizeTickets?: number
+        eth?: string
+      } = {
+        playingChips: user.playingChips - 1,
+      }
+
+      if (!win) {
+        await usersService.patch(user.address, pathData)
+
+        return {
+          win: false,
+        }
+      }
+
+      const tier = chance.weighted(
+        TIERS,
+        TIERS.map((t) => t.chance)
+      )
+
+      const symbol = chance.weighted(
+        SYMBOLS,
+        SYMBOLS.map((s) => s.chance)
+      )
+
+      const payline = chance.pickone(PAYLINES.filter((p) => p.tier === tier.id))
+
+      const result = {
+        win: true,
+        tier: omit(tier, ['chance']),
+        symbol: omit(symbol, ['chance']),
+        payline,
+      }
+
+      switch (symbol.unit) {
+        case 'eth':
+          const amount = web3.utils.toBN(
+            web3.utils.toWei(
+              (symbol.prize * tier.multiplier).toString(),
+              'ether'
+            )
+          )
+          pathData.eth = web3.utils.toBN(user.eth).add(amount).toString()
+          break
+        case 'ticket':
+          pathData.prizeTickets =
+            user.prizeTickets + symbol.prize * tier.multiplier
+          break
+      }
+
+      await usersService.patch(user.address, pathData)
+
+      return result
+    } catch (e) {
+      throw e
+    } finally {
+      this.lock.delete(params.user!.address)
     }
-
-    const tier = weighted(
-      TIERS,
-      TIERS.map((t) => t.chance)
-    )
-
-    const symbol = weighted(
-      SYMBOLS,
-      SYMBOLS.map((s) => s.chance)
-    )
-
-    const payline = pickone(PAYLINES.filter((p) => p.tier === tier.id))
-
-    const result = {
-      win: true,
-      tier: omit(tier, ['chance']),
-      symbol: omit(symbol, ['chance']),
-      payline,
-    }
-
-    return result
   }
 }

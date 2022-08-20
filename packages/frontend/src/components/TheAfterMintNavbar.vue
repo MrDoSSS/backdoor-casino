@@ -16,7 +16,11 @@ const play = () => {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand navbar-dark bg-dark" ref="navbarRef">
+  <nav
+    class="navbar navbar-expand navbar-dark bg-dark"
+    ref="navbarRef"
+    id="the-navbar"
+  >
     <div class="container-xl flex-lg-row flex-column">
       <router-link
         :to="{ name: 'home' }"
