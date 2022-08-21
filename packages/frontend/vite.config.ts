@@ -13,8 +13,9 @@ export default defineConfig({
   },
   define: {
     'process.env': {},
-    global: {},
+    global: 'globalThis',
   },
+
   css: {
     preprocessorOptions: {
       scss: {

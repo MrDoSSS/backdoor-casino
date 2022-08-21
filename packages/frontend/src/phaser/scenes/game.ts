@@ -6,6 +6,7 @@ import { useUserStore } from '@/store/user'
 import { useWalletStore } from '@/store/wallet'
 import { web3 } from '@/web3'
 import { slotMachineService } from '@/services/slot-machine'
+import KawaseBlurPipelinePlugin from 'phaser3-rex-plugins/plugins/kawaseblurpipeline-plugin'
 
 export class GameScene extends Phaser.Scene {
   containers: Phaser.GameObjects.Container[] = []
@@ -34,8 +35,13 @@ export class GameScene extends Phaser.Scene {
     return 242
   }
 
+  get blurPipeline() {
+    return this.plugins.get('rexKawaseBlurPipeline') as KawaseBlurPipelinePlugin
+  }
+
   create() {
     this.add.image(413, 524, 'Sections').setOrigin(0, 0)
+    this.add.image(930, 624, 'Glare').setOrigin(0, 0)
 
     this.addSection(428, 530)
     this.addSection(1028, 530)
@@ -144,6 +150,8 @@ export class GameScene extends Phaser.Scene {
 
     this.lock = true
 
+    if (this.userStore.user!.playingChips <= 0) return
+
     try {
       this.playingChipsText.setText(
         (this.userStore.user!.playingChips - 1).toString()
@@ -151,6 +159,7 @@ export class GameScene extends Phaser.Scene {
 
       this.containers.forEach((container, i) => {
         const symbols = container.getAll() as Phaser.GameObjects.Image[]
+        this.blurPipeline.add(container, { blur: 7 })
 
         this.add.tween({
           targets: container,
@@ -164,6 +173,7 @@ export class GameScene extends Phaser.Scene {
           },
           onComplete: () => {
             symbols.forEach((img, i) => img.setVisible([0, 1, 2].includes(i)))
+            this.blurPipeline.remove(container)
 
             if (this.containers.length - 1 !== i) return
 
