@@ -81,9 +81,12 @@ const generateCode = async () => {
 }
 
 const tweet = () => {
+  const countdownDate = dayjs(Date.UTC(2022, 7, 28, 23, 0, 0))
+  const hours = countdownDate.diff(dayjs(), 'h')
+
   const params =
     'scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=600,height=600'
-  const text = `Backdoor Casino Opening ♠️\n\nFirst ever NFT Slot Machine\n\nJoin VIP List: backdoorcasino.xyz\n\n🎰 Code: ${twitterCodeStore.code}\n\nFree mint soon\n\n`
+  const text = `♦️ Backdoor Casino Opening ♦️\n\nFirst ever NFT Slot Machine\n\nJoin VIP List: backdoorcasino.xyz\n\nBonus code: ${twitterCodeStore.code}\n\n🎰 Free Mint starts in ${hours} hrs.\n\n`
   const url = `https://twitter.com/intent/tweet?text=${encodeURI(
     text
   )}&hashtags=backdoorcasino&via=backdoorcasino`
@@ -271,7 +274,7 @@ calculateCountdown()
         <h2 class="mb-4">Triple ONI</h2>
         <div class="row justify-content-between mb-5 gx-lg-3">
           <div class="col-12 col-lg-6 order-2 order-lg-1">
-            <video autoplay loop muted>
+            <video autoplay loop muted playsinline>
               <img src="/home/slot-machine.jpg" alt="Slot machine" />
               <source src="/home/triple-oni.mp4" />
             </video>
