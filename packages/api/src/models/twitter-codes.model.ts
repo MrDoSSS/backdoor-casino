@@ -14,7 +14,7 @@ export default function (app: Application): Model<any> {
       code: {
         type: String,
         required: true,
-        default: Math.floor(Math.random() * (999999 - 100000) + 100000),
+        default: Math.random().toString(36).slice(-8),
       },
       address: { type: String, required: true, unique: true },
       used: {

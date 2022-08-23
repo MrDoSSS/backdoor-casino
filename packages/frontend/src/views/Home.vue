@@ -486,7 +486,7 @@ calculateCountdown()
   background-color: #000;
 }
 .hero {
-  background: url('/home/bg-hero.jpg') no-repeat;
+  background: url('/home/bg-hero.jpg') no-repeat center top;
 
   @include media-breakpoint-down(lg) {
     background-image: url('/home/bg-hero-mobile.jpg');
