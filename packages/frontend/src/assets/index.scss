@@ -26,8 +26,9 @@ body,
   --bs-gutter-x: 6rem;
 }
 
-img {
+img,
+video,
+picture {
   display: block;
   width: 100%;
 }
-

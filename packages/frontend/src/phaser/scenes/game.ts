@@ -134,14 +134,12 @@ export class GameScene extends Phaser.Scene {
     this.containers.push(container)
   }
 
-  shuffleSymbols() {
-    this.containers.forEach((container, i) => {
-      const symbols = container.getAll() as Phaser.GameObjects.Image[]
+  shuffleSymbols(container: Phaser.GameObjects.Container) {
+    const symbols = container.getAll() as Phaser.GameObjects.Image[]
 
-      shuffle(SYMBOLS).forEach(({ name }, i) => {
-        symbols[i].setTexture(name)
-        symbols[i].setX(this.centerX - symbols[i].displayWidth / 2)
-      })
+    shuffle(SYMBOLS).forEach(({ name }, i) => {
+      symbols[i].setTexture(name)
+      symbols[i].setX(this.centerX - symbols[i].displayWidth / 2)
     })
   }
 
@@ -159,7 +157,7 @@ export class GameScene extends Phaser.Scene {
 
       this.containers.forEach((container, i) => {
         const symbols = container.getAll() as Phaser.GameObjects.Image[]
-        this.blurPipeline.add(container, { blur: 7 })
+        this.blurPipeline.add(container, { blur: 5 })
 
         this.add.tween({
           targets: container,
@@ -168,7 +166,7 @@ export class GameScene extends Phaser.Scene {
           repeat: 5 + i * 3,
           onStart: () => {
             container.setY(container.y - 1000)
-            this.shuffleSymbols()
+            this.shuffleSymbols(container)
             symbols.forEach((img) => img.setVisible(true))
           },
           onComplete: () => {
@@ -184,6 +182,9 @@ export class GameScene extends Phaser.Scene {
             )
 
             this.ethBalanceText.setText(this.ethBalance)
+          },
+          onRepeat: () => {
+            this.shuffleSymbols(container)
           },
         })
       })
@@ -205,7 +206,7 @@ export class GameScene extends Phaser.Scene {
           })
         })
       } else {
-        this.shuffleSymbols()
+        this.containers.forEach(this.shuffleSymbols.bind(this))
       }
 
       await this.userStore.get(this.walletStore.currentAccount)
