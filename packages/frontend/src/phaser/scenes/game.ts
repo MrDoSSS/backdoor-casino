@@ -184,7 +184,7 @@ export class GameScene extends Phaser.Scene {
             this.ethBalanceText.setText(this.ethBalance)
           },
           onRepeat: () => {
-            this.shuffleSymbols(container)
+            // this.shuffleSymbols(container)
           },
         })
       })
