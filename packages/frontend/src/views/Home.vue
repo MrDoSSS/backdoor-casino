@@ -196,9 +196,19 @@ calculateCountdown()
           <div class="col-12 col-lg-5 mb-3 mb-lg-0">
             <div class="position-relative">
               <img src="/home/hero.webp" class="hero-img" alt="" />
-              <lottie-player class="hero-eth" loop src="/home/eth.json" />
+              <lottie-player
+                autoplay
+                class="hero-eth"
+                loop
+                src="/home/eth.json"
+              />
               <lottie-player class="hero-helmet" loop src="/home/helmet.json" />
-              <lottie-player class="hero-oni" loop src="/home/oni.json" />
+              <lottie-player
+                autoplay
+                class="hero-oni"
+                loop
+                src="/home/oni.json"
+              />
             </div>
           </div>
           <div class="col-12" v-if="mq.lgMinus">
@@ -598,6 +608,7 @@ calculateCountdown()
   &-eth {
     top: 0;
     left: -5rem;
+    filter: blur(0.08rem);
 
     @include media-breakpoint-down(sm) {
       left: 2rem;
@@ -621,6 +632,7 @@ calculateCountdown()
     top: 15rem;
     right: 0rem;
     transform: rotate(15deg);
+    filter: blur(0.08rem);
 
     @include media-breakpoint-down(sm) {
       top: 10rem;
