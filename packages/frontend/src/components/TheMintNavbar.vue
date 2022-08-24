@@ -82,17 +82,9 @@ onUnmounted(() => {
             Redeem bonus
           </button>
         </li>
-        <template v-if="walletStore.connected && authStore.loggedIn">
-          <li class="nav-item">
-            <span class="nav-link text-success" v-if="whitelistStore.exists"
-              >Whitelisted</span
-            >
-            <span class="nav-link text-danger" v-else>Not Whitelisted</span>
-          </li>
-          <li class="nav-item">
-            <span class="nav-link text-success">{{ slisedWallet }}</span>
-          </li>
-        </template>
+        <li class="nav-item" v-if="walletStore.connected && authStore.loggedIn">
+          <span class="nav-link text-success">{{ slisedWallet }}</span>
+        </li>
         <li class="nav-item" v-else>
           <button
             class="btn btn-primary btn-round ms-1 me-0 me-lg-2"
