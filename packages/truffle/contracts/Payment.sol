@@ -15,13 +15,17 @@ contract Payment is Ownable, ReentrancyGuard {
   mapping (string => uint256) public amounts;
 
   constructor() {
-    prices["small"] = 0.02 ether;
-    prices["medium"] = 0.05 ether;
-    prices["big"] = 0.1 ether;
+    prices["xs"] = 0.0099 ether;
+    prices["sm"] = 0.0199 ether;
+    prices["md"] = 0.027 ether;
+    prices["lg"] = 0.078 ether;
+    prices["xl"] = 0.149 ether;
 
-    amounts["small"] = 100;
-    amounts["medium"] = 400;
-    amounts["big"] = 1000;
+    amounts["xs"] = 15;
+    amounts["sm"] = 30;
+    amounts["md"] = 50;
+    amounts["lg"] = 150;
+    amounts["xl"] = 300;
   }
 
   function purchaseChips(string memory _size) public payable {

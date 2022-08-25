@@ -18,12 +18,20 @@ await userStore.get(walletStore.currentAccount)
   <div class="profile flex-grow-1">
     <div class="container">
       <h3>Buy Playing Chips</h3>
-      <div class="row gx-lg-0 gy-2">
-        <div class="col-12 col-sm-4 col-lg-3"><BuyCard size="small" /></div>
-        <div class="col-12 col-sm-4 col-lg-3">
-          <BuyCard size="medium" best />
+      <div class="row gy-2">
+        <div class="col-12 col-sm-4 col-lg"><BuyCard size="xs" /></div>
+        <div class="col-12 col-sm-4 col-lg">
+          <BuyCard size="sm" />
         </div>
-        <div class="col-12 col-sm-4 col-lg-3"><BuyCard size="big" /></div>
+        <div class="col-12 col-sm-4 col-lg">
+          <BuyCard size="md" discount="10" />
+        </div>
+        <div class="col-12 col-sm-4 col-lg">
+          <BuyCard size="lg" discount="15" />
+        </div>
+        <div class="col-12 col-sm-4 col-lg">
+          <BuyCard size="xl" discount="20" />
+        </div>
       </div>
       <div class="row gy-4">
         <div class="col-12 col-lg-6">
@@ -73,7 +81,9 @@ await userStore.get(walletStore.currentAccount)
 
 <style lang="scss" scoped>
 .profile {
-  background-image: linear-gradient(77deg, #151517 40%, #2b465a 102%);
+  background: url('/backgrounds/bg-mint-details.jpg') no-repeat,
+    url('/backgrounds/bg-slot-machine.png') no-repeat center -800%;
+
   padding: 8rem 0 15rem;
 
   .row {

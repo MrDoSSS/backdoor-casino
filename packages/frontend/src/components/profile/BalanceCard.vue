@@ -34,7 +34,7 @@ const value = computed(() =>
   padding: 1.5rem 1.8rem;
 
   &-value {
-    font-size: 4.8rem;
+    font-size: 4rem;
   }
 }
 </style>

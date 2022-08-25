@@ -1,8 +1,17 @@
 <script lang="ts" setup>
 import { useModal } from '@/composables/modal'
-import { onUnmounted } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 
 const { modalEl, showModal, hideModal } = useModal()
+
+const emit = defineEmits(['shown', 'hidden'])
+
+onMounted(() => {
+  if (modalEl.value instanceof HTMLElement) {
+    modalEl.value.addEventListener('shown.bs.modal', () => emit('shown'))
+    modalEl.value.addEventListener('hidden.bs.modal', () => emit('hidden'))
+  }
+})
 
 onUnmounted(hideModal)
 
@@ -45,6 +54,10 @@ defineExpose({
       margin-left: auto;
       margin-right: auto;
     }
+  }
+
+  &-sm &-content {
+    padding: 4rem 4rem 3rem;
   }
 
   &-content {
@@ -96,10 +109,12 @@ defineExpose({
 }
 </style>
 
-<style>
+<style lang="scss">
 .modal-backdrop {
-  backdrop-filter: blur(1rem);
-  --bs-backdrop-bg: rgba(0, 0, 0, 0.1) !important;
-  --bs-backdrop-opacity: 1 !important;
+  @include media-breakpoint-up(lg) {
+    backdrop-filter: blur(1rem);
+    --bs-backdrop-bg: rgba(0, 0, 0, 0.1) !important;
+    --bs-backdrop-opacity: 1 !important;
+  }
 }
 </style>

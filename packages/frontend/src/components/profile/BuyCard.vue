@@ -2,14 +2,21 @@
 import { estimateGas } from '@/utils'
 import { web3, paymentContract } from '@/web3'
 import { ref } from 'vue'
+import Modal from '@/components/Modal.vue'
+
+const modalRef = ref()
+
+const showModal = () => modalRef.value.show()
 
 interface Props {
-  size: 'small' | 'medium' | 'big'
-  best?: boolean
+  size: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+  discount?: number | string
 }
 
 const props = defineProps<Props>()
 const loading = ref(false)
+const success = ref(false)
+const error = ref(false)
 
 const amount = await paymentContract.methods
   .amounts(props.size)
@@ -34,62 +41,103 @@ const buy = async () => {
       maxPriorityFeePerGas: null,
       maxFeePerGas: null,
     })
+    success.value = true
   } catch (e) {
+    error.value = true
     console.log(e)
   } finally {
     loading.value = false
   }
 }
+
+const reset = () => {
+  success.value = false
+  error.value = false
+  loading.value = false
+}
 </script>
 
 <template>
-  <div class="buy-card">
-    <div class="buy-card-best" v-if="props.best">BEST VALUE</div>
-    <div class="buy-card-content">
-      <img src="/profile/money.png" alt="" />
-      <div class="buy-card-title text-success">{{ amount }}x Playing Chips</div>
-      <div>Only {{ priceInEth }} ETH</div>
+  <div class="buy-card h-100 d-flex flex-column justify-content-end">
+    <div class="buy-card-discount lh-1" v-if="props.discount">
+      <img class="d-inline me-1" src="/profile/percent.svg" />-{{
+        props.discount
+      }}% Discount
     </div>
-    <button
-      class="buy-card-btn d-block text-center"
-      @click="buy"
-      :disabled="loading"
-    >
-      Buy <img src="/profile/cart.svg" alt="" />
-    </button>
+    <img class="buy-card-img" :src="`/profile/${props.size}.png`" alt="" />
+    <div>
+      <div class="buy-card-title text-success">{{ amount }}x Playing Chips</div>
+      <div class="mb-1">{{ priceInEth }} ETH</div>
+      <button
+        class="btn btn-light btn-sm btn-round text-nowrap"
+        @click="showModal"
+      >
+        Buy <img class="d-inline" src="/profile/cart.svg" alt="" />
+      </button>
+    </div>
   </div>
+
+  <Modal class="modal-sm" ref="modalRef" @hidden="reset">
+    <template v-if="success">
+      <h5 class="text-center">You just bought Playing Chips.</h5>
+      <div class="d-flex align-items-center">
+        <img class="modal-img" :src="`/profile/${props.size}.png`" alt="" />
+        <div class="text-success">
+          Playing Chips will be added to your balance shortly.
+        </div>
+      </div>
+    </template>
+    <template v-else-if="error">
+      <h5 class="text-center fw-normal">Something went wrong.</h5>
+      <div class="d-flex align-items-center">
+        <img class="modal-img" :src="`/profile/${props.size}.png`" alt="" />
+        <div class="text-danger">
+          Your request did not go through. Please close and try again.
+        </div>
+      </div>
+    </template>
+    <template v-else>
+      <h5 class="text-center">Please confirm your purchase</h5>
+      <div class="d-flex align-items-center">
+        <img class="modal-img" :src="`/profile/${props.size}.png`" alt="" />
+        <div>
+          <div class="buy-card-title text-success">
+            {{ amount }}x Playing Chips
+          </div>
+          <div class="mb-1">x {{ priceInEth }} ETH</div>
+          <div class="fs-6 text mb-1">This purchase is not refundable.</div>
+          <button
+            class="btn btn-primary btn-sm btn-round"
+            @click="buy"
+            :disabled="loading"
+          >
+            Confirm
+          </button>
+        </div>
+      </div>
+    </template>
+  </Modal>
 </template>
 
 <style lang="scss" scoped>
 .buy-card {
-  background-color: #000;
-  border: 0.1rem solid #fff;
-  border-radius: 0.4rem;
-  overflow: hidden;
   position: relative;
 
   @include media-breakpoint-up(lg) {
     max-width: 20rem;
   }
 
-  &-best {
-    position: absolute;
-    font-size: 1.2rem;
-    top: 0.8rem;
-    left: 0.8rem;
-    border-bottom: 1px solid #fff;
+  &-discount {
+    img {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
   }
 
-  &-content {
-    padding: 2.5rem 1rem 2rem;
-    text-align: center;
-
-    img {
-      width: 9rem;
-      height: 9rem;
-      margin: auto;
-      margin-bottom: 1rem;
-    }
+  &-img {
+    width: 15rem;
+    height: 15rem;
+    object-fit: contain;
   }
 
   &-title {
@@ -97,19 +145,16 @@ const buy = async () => {
     line-height: 1;
   }
 
-  &-btn {
-    text-transform: uppercase;
-    padding: 0.8rem 1rem 0.5rem;
-    background-color: #fff;
-    font-weight: 700;
-    border: none;
-    width: 100%;
-    line-height: 1;
-
+  .btn {
+    width: 10rem;
     img {
-      display: inline;
       width: 1.5rem;
     }
   }
+}
+
+.modal-img {
+  width: 17rem;
+  margin-right: 1.5rem;
 }
 </style>

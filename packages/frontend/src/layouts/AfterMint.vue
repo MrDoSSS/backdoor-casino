@@ -2,6 +2,7 @@
 import TheAfterMintNavbar from '@/components/TheAfterMintNavbar.vue'
 import TheFooter from '@/components/TheFooter.vue'
 import TheConnectModal from '@/components/TheConnectModal.vue'
+import Loader from '@/components/Loader.vue'
 </script>
 
 <template>
@@ -11,7 +12,7 @@ import TheConnectModal from '@/components/TheConnectModal.vue'
 
       <Suspense>
         <RouterView />
-        <template #fallback>Loading...</template>
+        <template #fallback><Loader /></template>
       </Suspense>
     </main>
     <TheFooter />

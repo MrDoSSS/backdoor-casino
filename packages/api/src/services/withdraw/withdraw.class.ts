@@ -32,13 +32,7 @@ export class Withdraw {
       const account = this.app.get('web3Account')
 
       const user = await usersService.get(params.user!.address)
-      const amount = web3.utils.toBN(
-        web3.utils.toWei(data.amount.toString(), 'ether')
-      )
-
-      if (amount.gt(web3.utils.toBN(user.eth))) {
-        throw new PaymentError('You do not have enough eth')
-      }
+      const amount = web3.utils.toBN(user.eth)
 
       const gasAmount = 21000
       const gasPrice = await web3.eth.getGasPrice()

@@ -482,13 +482,14 @@ calculateCountdown()
               <details>
                 <summary>When is mint day?</summary>
                 <ul>
-                  <li>To be announced.</li>
+                  <li>The mint will go live on 28th of August.</li>
                 </ul>
               </details>
               <details>
                 <summary>What will be the price?</summary>
                 <ul>
-                  <li>Free mint 2 tokens, and 2 tokens for X Eth.</li>
+                  <li>VIP WL: 2 FREE per wallet + 4 for 0.01 ETH</li>
+                  <li>Public: 1 FREE per wallet + 2 for 0.01 ETH</li>
                 </ul>
               </details>
               <details>
@@ -530,14 +531,11 @@ calculateCountdown()
 </template>
 
 <style lang="scss" scoped>
-.home {
-  background-color: #000;
-}
 .hero {
-  background: url('/home/bg-hero.jpg') no-repeat center top;
+  background: url('/backgrounds/bg-hero.jpg') no-repeat center top;
   overflow: hidden;
   @include media-breakpoint-down(lg) {
-    background-image: url('/home/bg-hero-mobile.jpg');
+    background-image: url('/backgrounds/bg-hero-mobile.jpg');
     text-align: center;
     padding: 6rem 0 0;
   }
@@ -643,10 +641,10 @@ calculateCountdown()
 .mint {
   padding: 10rem 0 15rem;
 
-  background: url('/home/bg-mint-details.jpg') no-repeat;
+  background: url('/backgrounds/bg-mint-details.jpg') no-repeat;
 
   @include media-breakpoint-down(lg) {
-    background-image: url('/home/bg-mint-details-mobile.jpg');
+    background-image: url('/backgrounds/bg-mint-details-mobile.jpg');
   }
 
   @include media-breakpoint-down(lg) {
@@ -752,11 +750,11 @@ calculateCountdown()
 }
 
 .slot-machine {
-  background: url('/home/bg-slot-machine.png') no-repeat;
+  background: url('/backgrounds/bg-slot-machine.png') no-repeat;
   position: relative;
 
   @include media-breakpoint-down(lg) {
-    background-image: url('/home/bg-slot-machine.png');
+    background-image: url('/backgrounds/bg-slot-machine.png');
   }
 
   padding: 10rem 0 0rem;
@@ -881,10 +879,10 @@ calculateCountdown()
 
 .bottom {
   padding-top: 13rem;
-  background: url('/home/bg-bottom.png') no-repeat;
+  background: url('/backgrounds/bg-bottom.png') no-repeat;
 
   @include media-breakpoint-down(lg) {
-    background-image: url('/home/bg-bottom.png');
+    background-image: url('/backgrounds/bg-bottom.png');
   }
 }
 

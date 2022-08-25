@@ -5,7 +5,8 @@ $primary: #c04442;
 $secondary: #fff;
 $light: #fff;
 $success: #1dff18;
-$warning: #ff2618;
+$warning: #d8b341;
+$danger: #c04442;
 $link-color: #fff;
 $dark: #070707;
 
@@ -33,4 +34,8 @@ $container-max-widths: (
   lg: 960px,
   xl: 1000px,
   xxl: 1100px,
+);
+
+$font-sizes: (
+  6: 1.4rem,
 );

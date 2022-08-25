@@ -15,10 +15,11 @@ const userStore = useUserStore()
     Unclaimed Chips:
     <span class="ms-1">{{ userStore.user?.unclaimedPlayingChips }}</span>
   </div>
+  <div class="fs-6 text mb-1">Buy more reels to yield more chips.</div>
   <div class="d-flex">
-    <button class="btn btn-outline-light btn-sm me-2">Buy chips</button>
+    <a class="btn btn-outline-light btn-sm btn-round me-1"> Buy on OS </a>
     <button
-      class="btn btn-primary btn-sm"
+      class="btn btn-primary btn-sm btn-round"
       :disabled="userStore.user?.unclaimedPlayingChips === 0"
     >
       Claim

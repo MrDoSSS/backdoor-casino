@@ -15,7 +15,7 @@ export const initPhaserApp = (parent: HTMLElement) => {
       parent,
       autoCenter: Phaser.Scale.CENTER_BOTH,
       width: 2540,
-      height: 1429 + 865 + 30,
+      height: 1429 + 613 + 30,
     },
     plugins: {
       global: [

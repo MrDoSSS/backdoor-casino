@@ -1,5 +1,7 @@
 .btn {
   text-transform: uppercase;
+  line-height: 1;
+  padding-top: calc(var(--bs-btn-padding-y) + 3px);
 
   &-round {
     border-radius: 2rem;
