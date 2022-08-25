@@ -22,6 +22,7 @@ interface Symbol {
 }
 
 interface Payline {
+  id: number
   combination: number[]
   tier: number
 }
@@ -31,6 +32,7 @@ interface Result {
   tier?: Omit<Tier, 'chance'>
   symbol?: Omit<Symbol, 'chance'>
   payline?: Payline
+  multiplier?: number
 }
 
 const TIERS: Tier[] = [
@@ -128,60 +130,73 @@ const SYMBOLS: Symbol[] = [
 
 const PAYLINES: Payline[] = [
   {
+    id: 1,
     combination: [0, 1, 0, 0, 1, 0, 0, 1, 0],
     tier: 1,
   },
   {
+    id: 2,
     combination: [1, 0, 0, 1, 0, 0, 1, 0, 0],
     tier: 1,
   },
   {
+    id: 3,
     combination: [0, 0, 1, 0, 0, 1, 0, 0, 1],
     tier: 1,
   },
   {
+    id: 4,
     combination: [0, 0, 1, 0, 1, 0, 1, 0, 0],
     tier: 1,
   },
   {
+    id: 5,
     combination: [1, 0, 0, 0, 1, 0, 0, 0, 1],
     tier: 1,
   },
   {
+    id: 6,
     combination: [1, 0, 0, 0, 1, 0, 1, 0, 0],
     tier: 2,
   },
   {
+    id: 7,
     combination: [0, 1, 0, 0, 0, 1, 0, 1, 0],
     tier: 2,
   },
   {
+    id: 8,
     combination: [0, 1, 0, 1, 0, 0, 0, 1, 0],
     tier: 2,
   },
   {
+    id: 9,
     combination: [0, 0, 1, 0, 1, 0, 0, 0, 1],
     tier: 2,
   },
   {
+    id: 10,
     combination: [0, 1, 0, 1, 0, 1, 0, 1, 0],
     tier: 2,
   },
   {
+    id: 11,
     combination: [1, 0, 1, 0, 1, 0, 0, 1, 0],
     tier: 2,
   },
   {
+    id: 12,
     combination: [0, 1, 0, 0, 1, 0, 1, 0, 1],
     tier: 2,
   },
   {
+    id: 13,
     combination: [1, 1, 1, 1, 1, 1, 1, 1, 1],
     tier: 3,
   },
 ]
 
-const WIN_CHANCE = 33
+const WIN_CHANCE = 100
 
 export class SlotMachine {
   app: Application
@@ -247,6 +262,7 @@ export class SlotMachine {
         win: true,
         tier: omit(tier, ['chance']),
         symbol: omit(symbol, ['chance']),
+        multiplier: tier.multiplier,
         payline,
       }
 
@@ -254,7 +270,7 @@ export class SlotMachine {
         case 'eth':
           const amount = web3.utils.toBN(
             web3.utils.toWei(
-              (symbol.prize * tier.multiplier).toString(),
+              (symbol.prize * result.multiplier).toString(),
               'ether'
             )
           )
@@ -262,7 +278,7 @@ export class SlotMachine {
           break
         case 'ticket':
           pathData.prizeTickets =
-            user.prizeTickets + symbol.prize * tier.multiplier
+            user.prizeTickets + symbol.prize * result.multiplier
           break
       }
 

@@ -20,3 +20,7 @@ interface ImportMetaEnv {
 declare module 'vue3-mq' {
   export const Vue3Mq
 }
+
+declare module 'phaser3-rex-plugins/plugins/awaitloader-plugin.js' {
+  
+}

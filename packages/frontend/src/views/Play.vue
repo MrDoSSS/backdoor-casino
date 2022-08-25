@@ -11,8 +11,6 @@ const slotMachine = ref<HTMLElement>()
 const walletStore = useWalletStore()
 const userStore = useUserStore()
 
-await userStore.get(walletStore.currentAccount).catch(() => null)
-
 onMounted(() => {
   const navbar = document.querySelector('#the-navbar')!
   const { height: navbarHeight } = navbar.getBoundingClientRect()
