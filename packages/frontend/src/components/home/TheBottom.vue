@@ -162,7 +162,7 @@ const props = defineProps<{ countdownDate: Dayjs }>()
   background: url('/backgrounds/bg-bottom.png') no-repeat;
 
   @include media-breakpoint-down(lg) {
-    background-image: url('/backgrounds/bg-bottom.png');
+    background-image: unset;
   }
 }
 
