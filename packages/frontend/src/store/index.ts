@@ -18,36 +18,38 @@ export const initStore: {
   ready: false,
   readyHandlers: [],
   async install() {
-    const walletStore = useWalletStore()
-    const authStore = useAuthStore()
+    try {
+      const walletStore = useWalletStore()
+      const authStore = useAuthStore()
 
-    setInbrowserProvider()
+      setInbrowserProvider()
 
-    walletStore.init()
-    await walletStore.checkAccount()
-    await authStore.checkAuth()
+      walletStore.init()
+      await walletStore.checkAccount()
+      await authStore.checkAuth()
 
-    if (
-      authStore.loggedIn &&
-      walletStore.connected &&
-      authStore.address === walletStore.currentAccount
-    ) {
-      initWeb3(walletStore.currentAccount)
+      if (
+        authStore.loggedIn &&
+        walletStore.connected &&
+        authStore.address === walletStore.currentAccount
+      ) {
+        initWeb3(walletStore.currentAccount)
 
-      const whitelistStore = useWhitelistStore()
-      const twitterCodeStore = useTwitterCodeStore()
-      const contractStore = useContractStore()
+        const whitelistStore = useWhitelistStore()
+        const twitterCodeStore = useTwitterCodeStore()
+        const contractStore = useContractStore()
 
-      await whitelistStore.find(walletStore.currentAccount)
-      await twitterCodeStore.find(walletStore.currentAccount)
-      await contractStore.init(walletStore.currentAccount)
-    } else {
-      walletStore.disconnect()
+        await whitelistStore.find(walletStore.currentAccount)
+        await twitterCodeStore.find(walletStore.currentAccount)
+        await contractStore.init(walletStore.currentAccount)
+      } else {
+        walletStore.disconnect()
+      }
+    } finally {
+      this.ready = true
+
+      this.readyHandlers.forEach((resolve) => resolve())
     }
-
-    this.ready = true
-
-    this.readyHandlers.forEach((resolve) => resolve())
   },
   isReady() {
     if (this.ready) return Promise.resolve()
