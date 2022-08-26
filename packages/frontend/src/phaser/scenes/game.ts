@@ -380,51 +380,56 @@ export class GameScene extends Phaser.Scene {
             symbols[si].setX(this.centerX - symbols[si].displayWidth / 2)
           })
         })
-      } else {
-        this.containers.forEach(this.shuffleSymbols.bind(this))
-      }
 
-      await this.userStore.get(this.walletStore.currentAccount)
+        await this.userStore.get(this.walletStore.currentAccount)
 
-      const tweens = this.tweens.getAllTweens()
-      tweens[tweens.length - 1].on('complete', () => {
-        this.messageText.setText(
-          `WIN ${
-            data.symbol.prize * data.multiplier
-          } ${data.symbol.unit.toUpperCase()}`
-        )
+        const tweens = this.tweens.getAllTweens()
+        tweens[tweens.length - 1].on('complete', () => {
+          this.messageText.setText(
+            `WIN ${
+              data.symbol.prize * data.multiplier
+            } ${data.symbol.unit.toUpperCase()}`
+          )
 
-        const leftNumbers = this.paylines.left[data.payline.id - 1]
-        const rightNumbers = this.paylines.right[data.payline.id - 1]
+          const leftNumbers = this.paylines.left[data.payline.id - 1]
+          const rightNumbers = this.paylines.right[data.payline.id - 1]
 
-        if (leftNumbers.length > 1 && rightNumbers.length > 1) {
-          leftNumbers.forEach((left, i) => {
-            const right = rightNumbers[i]
-            const line = new Phaser.Geom.Line(left.x, left.y, right.x, right.y)
-            this.lineGraphic.strokeLineShape(line)
-          })
-        } else if (leftNumbers.length > 1) {
-          leftNumbers.forEach((left, i) => {
+          if (leftNumbers.length > 1 && rightNumbers.length > 1) {
+            leftNumbers.forEach((left, i) => {
+              const right = rightNumbers[i]
+              const line = new Phaser.Geom.Line(
+                left.x,
+                left.y,
+                right.x,
+                right.y
+              )
+              this.lineGraphic.strokeLineShape(line)
+            })
+          } else if (leftNumbers.length > 1) {
+            leftNumbers.forEach((left, i) => {
+              const [right] = rightNumbers
+              this.lineGraphic.strokeLineShape(
+                new Phaser.Geom.Line(left.x, left.y, right.x, right.y)
+              )
+            })
+          } else if (rightNumbers.length > 1) {
+            rightNumbers.forEach((right, i) => {
+              const [left] = leftNumbers
+              this.lineGraphic.strokeLineShape(
+                new Phaser.Geom.Line(left.x, left.y, right.x, right.y)
+              )
+            })
+          } else {
+            const [left] = leftNumbers
             const [right] = rightNumbers
             this.lineGraphic.strokeLineShape(
               new Phaser.Geom.Line(left.x, left.y, right.x, right.y)
             )
-          })
-        } else if (rightNumbers.length > 1) {
-          rightNumbers.forEach((right, i) => {
-            const [left] = leftNumbers
-            this.lineGraphic.strokeLineShape(
-              new Phaser.Geom.Line(left.x, left.y, right.x, right.y)
-            )
-          })
-        } else {
-          const [left] = leftNumbers
-          const [right] = rightNumbers
-          this.lineGraphic.strokeLineShape(
-            new Phaser.Geom.Line(left.x, left.y, right.x, right.y)
-          )
-        }
-      })
+          }
+        })
+      } else {
+        this.containers.forEach(this.shuffleSymbols.bind(this))
+      }
     } catch (e) {
       this.messageText.setText('Something went wrong...')
     } finally {

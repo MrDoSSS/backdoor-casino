@@ -59,7 +59,7 @@ const mint = async () => {
     ) {
       return (status.value = 'amount-error')
     }
-
+  
     const method = collectionContract.methods[methodName](
       mintAmount.value,
       signature
