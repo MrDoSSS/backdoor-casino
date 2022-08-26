@@ -59,7 +59,7 @@ const mint = async () => {
     ) {
       return (status.value = 'amount-error')
     }
-  
+
     const method = collectionContract.methods[methodName](
       mintAmount.value,
       signature
@@ -176,7 +176,7 @@ const mint = async () => {
           <div class="text-warning" v-if="loading">Wait...</div>
           <div class="fs-6 text text-danger" v-else>
             <div v-if="status === 'presale-error'">
-              Mint now available only for presale members!
+              Mint now available only for VIP members!
             </div>
             <div v-else-if="status === 'amount-error'">
               Exceeds maximum tokens at address

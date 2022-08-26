@@ -8,7 +8,7 @@ import TheBottom from '@/components/home/TheBottom.vue'
 
 import '@lottiefiles/lottie-player'
 
-const countdownDate = dayjs(Date.UTC(2021, 7, 28, 23, 0, 0))
+const countdownDate = dayjs(Date.UTC(2022, 7, 28, 20, 0, 0))
 
 const countdown = ref<{
   days: string
