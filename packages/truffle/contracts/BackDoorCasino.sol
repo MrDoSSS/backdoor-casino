@@ -10,7 +10,7 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 import "./Presalable.sol";
 
-contract Casino is ERC721AQueryable, Ownable, Pausable, Presalable, ReentrancyGuard {
+contract BackDoorCasino is ERC721AQueryable, Ownable, Pausable, Presalable, ReentrancyGuard {
   using SafeMath for uint;
   using ECDSA for bytes32;
 
@@ -40,7 +40,18 @@ contract Casino is ERC721AQueryable, Ownable, Pausable, Presalable, ReentrancyGu
     return _numberMinted(owner);
   }
 
-  function mint(uint256 _amount) public payable whenNotPresaled whenNotPaused {
+  function mint(uint256 _amount, bytes memory _signature) public payable whenAllowedPublic whenNotPaused {
+    address signer = _recoverSigner(msg.sender, _signature);
+    
+    require(signer == owner(), "Not authorized to mint");
+    require(_numberMinted(msg.sender) + _amount <= 3, "Can only mint 3 tokens at address");
+    require(_totalMinted() + _amount <= maxTotalSupply, "Exceeds maximum supply");
+
+    (, uint256 _nonFreeAmount) = _numberMinted(msg.sender) == 2 
+                                 ? (true, 1) : (_numberMinted(msg.sender) + _amount).trySub(1);
+
+    require(_nonFreeAmount == 0 || msg.value >= price * _nonFreeAmount, "Ether value sent is not correct");
+
     _safeMint(msg.sender, _amount);
   }
 
@@ -48,6 +59,20 @@ contract Casino is ERC721AQueryable, Ownable, Pausable, Presalable, ReentrancyGu
     address signer = _recoverSigner(msg.sender, _signature);
 
     require(signer == owner(), "Not authorized to mint");
+    require(_numberMinted(msg.sender) + _amount <= 6, "Can only mint 6 tokens at address");
+    require(_totalMinted() + _amount <= maxTotalSupply, "Exceeds maximum supply");
+
+    uint256 _nonFreeAmount;
+
+    if(_numberMinted(msg.sender) == 0 && _amount > 1) {
+      _nonFreeAmount = _amount - 2;
+    } else if(_numberMinted(msg.sender) < 2 && _amount == 1) {
+      _nonFreeAmount = 0;
+    } else if(_numberMinted(msg.sender) > 1) {
+      _nonFreeAmount = _amount;
+    }
+
+    require(_nonFreeAmount == 0 || msg.value >= presalePrice * _nonFreeAmount, "Ether value sent is not correct");
   
     _safeMint(msg.sender, _amount);
   }
@@ -93,6 +118,14 @@ contract Casino is ERC721AQueryable, Ownable, Pausable, Presalable, ReentrancyGu
 
   function unpresale() public onlyOwner {
     _unpresale();
+  }
+
+  function allowPublic() public onlyOwner {
+    _allowPublic();
+  }
+
+  function disallowPublic() public onlyOwner {
+    _disallowPublic();
   }
 
   function _recoverSigner(address _wallet, bytes memory _signature) private pure returns (address){

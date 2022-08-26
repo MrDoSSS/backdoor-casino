@@ -9,7 +9,7 @@ export const initPhaserApp = (parent: HTMLElement) => {
   const config: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
     scene: [BootScene, PreloadScene, GameScene],
-    backgroundColor: '#070707',
+    transparent: true,
     scale: {
       mode: Phaser.Scale.FIT,
       parent,

@@ -4980,7 +4980,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.7",
-  "updatedAt": "2022-08-13T23:13:43.470Z",
+  "updatedAt": "2022-08-26T12:45:27.232Z",
   "devdoc": {
     "details": "ERC721A subclass with convenience query functions.",
     "kind": "dev",

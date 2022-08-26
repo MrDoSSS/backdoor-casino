@@ -1,7 +1,7 @@
-const Casino = artifacts.require('Casino')
-const Payment = artifacts.require('Payment')
+const BackDoorCasino = artifacts.require('BackDoorCasino')
+const BDCPayment = artifacts.require('BDCPayment')
 
 module.exports = function (deployer) {
-  deployer.deploy(Casino, '')
-  deployer.deploy(Payment)
+  deployer.deploy(BackDoorCasino, '')
+  deployer.deploy(BDCPayment)
 }

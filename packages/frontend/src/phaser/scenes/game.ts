@@ -255,7 +255,7 @@ export class GameScene extends Phaser.Scene {
     this.drawNumbers()
 
     this.add.image(332, 51, 'Rewards').setOrigin(0, 0)
-    this.add.rectangle(0, 1429, 2540, 895, 0x000000).setOrigin(0, 0)
+    this.add.rectangle(380, 1429, 1800, 643, 0x000000).setOrigin(0, 0)
 
     this.drawActions()
     this.drawText()

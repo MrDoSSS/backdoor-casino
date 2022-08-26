@@ -37,26 +37,20 @@ export class PreloadScene extends Phaser.Scene {
       this.load.image(symbol.name, symbol.image)
     }
 
-    this.add
-      .image(
-        this.cameras.main.width / 2,
-        this.cameras.main.height / 2.5,
-        'Logo'
-      )
-      .setScale(2)
+    this.add.image(this.cameras.main.width / 2, 400, 'Logo').setScale(2)
     this.progressBox = this.add.graphics()
     this.progressBar = this.add.graphics()
     this.progressBox.fillStyle(0xffffff, 1)
     this.progressBox.fillRoundedRect(
       this.cameras.main.width / 2 - 670,
-      this.cameras.main.height / 1.6 - 90,
+      850,
       1440,
       50,
       25
     )
     this.loadingText = this.make.text({
       x: this.cameras.main.width / 2,
-      y: this.cameras.main.height / 1.6 - 150,
+      y: 750,
       text: '0%',
       style: {
         color: '#ffffff',
@@ -70,7 +64,7 @@ export class PreloadScene extends Phaser.Scene {
       this.progressBar!.fillStyle(0x000000, 1)
       this.progressBar!.fillRoundedRect(
         this.cameras.main.width / 2 - 660,
-        this.cameras.main.height / 1.6 - 85,
+        855,
         1420 * value,
         40,
         20

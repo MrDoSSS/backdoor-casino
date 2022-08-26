@@ -1,8 +1,8 @@
 import { Application } from './declarations'
 import Web3 from 'web3'
 import { AbiItem } from 'web3-utils'
-import { abi as collectionAbi } from '../../truffle/build/contracts/Casino.json'
-import { abi as paymentAbi } from '../../truffle/build/contracts/Payment.json'
+import { abi as collectionAbi } from '../../truffle/build/contracts/BackDoorCasino.json'
+import { abi as paymentAbi } from '../../truffle/build/contracts/BDCPayment.json'
 
 export default function (app: Application): void {
   const {

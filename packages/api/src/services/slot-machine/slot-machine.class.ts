@@ -196,7 +196,7 @@ const PAYLINES: Payline[] = [
   },
 ]
 
-const WIN_CHANCE = 100
+const WIN_CHANCE = 33
 
 export class SlotMachine {
   app: Application
@@ -219,6 +219,14 @@ export class SlotMachine {
       const usersService = this.app.service('users')
       const user = await usersService.get(params!.user!.address)
       const web3 = this.app.get('web3Client')
+      const collectionContract = this.app.get('web3CollectionContract')
+      const tokensOfOwner = await collectionContract.methods
+        .tokensOfOwner(user.address)
+        .call()
+
+      if (tokensOfOwner.length < 3) {
+        throw new PaymentError('You do not have enough tokens')
+      }
 
       if (user.playingChips <= 0) {
         throw new PaymentError('You do not have enough playing chips')
@@ -262,7 +270,7 @@ export class SlotMachine {
         win: true,
         tier: omit(tier, ['chance']),
         symbol: omit(symbol, ['chance']),
-        multiplier: tier.multiplier,
+        multiplier: tier.multiplier * Math.floor(tokensOfOwner.length / 3),
         payline,
       }
 

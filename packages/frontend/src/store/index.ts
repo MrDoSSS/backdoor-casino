@@ -2,6 +2,7 @@ import { createPinia } from 'pinia'
 import { useWalletStore } from './wallet'
 import { useWhitelistStore } from './whitelist'
 import { useAuthStore } from './auth'
+import { useContractStore } from './contract'
 import { setInbrowserProvider } from '@/ethereum'
 import { useTwitterCodeStore } from './twitter-code'
 import { initWeb3 } from '@/web3'
@@ -35,9 +36,11 @@ export const initStore: {
 
       const whitelistStore = useWhitelistStore()
       const twitterCodeStore = useTwitterCodeStore()
+      const contractStore = useContractStore()
 
       await whitelistStore.find(walletStore.currentAccount)
       await twitterCodeStore.find(walletStore.currentAccount)
+      await contractStore.init(walletStore.currentAccount)
     } else {
       walletStore.disconnect()
     }

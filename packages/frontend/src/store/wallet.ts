@@ -1,6 +1,7 @@
 import { useWhitelistStore } from '@/store/whitelist'
 import { useTwitterCodeStore } from '@/store/twitter-code'
 import { useAuthStore } from '@/store/auth'
+import { useContractStore } from '@/store/contract'
 import { defineStore } from 'pinia'
 import { ethereum } from '@/ethereum'
 import { initWeb3 } from '@/web3'
@@ -38,10 +39,12 @@ export const useWalletStore = defineStore('wallet', {
           const authStore = useAuthStore()
           const whitelistStore = useWhitelistStore()
           const twitterCodeStore = useTwitterCodeStore()
+          const contractStore = useContractStore()
 
           await authStore.signIn(this.currentAccount)
           await whitelistStore.find(this.currentAccount)
           await twitterCodeStore.find(this.currentAccount)
+          await contractStore.init(this.currentAccount)
         }
       } catch (e) {
         console.error(e)

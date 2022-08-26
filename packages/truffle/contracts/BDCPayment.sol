@@ -4,7 +4,7 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-contract Payment is Ownable, ReentrancyGuard {
+contract BDCPayment is Ownable, ReentrancyGuard {
 
   event ChipsPurchased(address receiver, string size, uint256 price, uint256 amount);
 

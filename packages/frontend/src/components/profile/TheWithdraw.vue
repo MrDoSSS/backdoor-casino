@@ -44,7 +44,9 @@ const withdraw = async () => {
     Withdraw
   </button>
   <div class="mt-1">
-    <div class="text-success" v-if="success">Claim has been sent</div>
+    <div class="text-success" v-if="success">
+      ETH will be sent to your wallet shortly.
+    </div>
     <div class="text-danger" v-else-if="error">Something went wrong...</div>
     <div class="text-warning" v-else-if="loading">Wait...</div>
   </div>
