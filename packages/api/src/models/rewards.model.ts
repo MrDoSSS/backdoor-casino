@@ -11,9 +11,12 @@ export default function (app: Application): Model<any> {
   const { Schema } = mongooseClient
   const schema = new Schema(
     {
-      credential: { type: String, required: true },
+      login: { type: String },
+      password: { type: String },
+      key: { type: String },
       product: { type: Schema.Types.ObjectId, ref: 'products', required: true },
       used: { type: Boolean, default: false },
+      address: { type: String },
     },
     {
       timestamps: true,

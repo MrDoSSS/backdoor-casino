@@ -2,7 +2,6 @@ import {
   List,
   Datagrid,
   TextField,
-  RichTextField,
   ReferenceField,
   EditButton,
   BooleanField,
@@ -12,10 +11,13 @@ export const RewardsList = () => {
   return (
     <List>
       <Datagrid>
-        <RichTextField source="credential" />
+        <TextField source="login" />
+        <TextField source="password" />
+        <TextField source="key" />
         <ReferenceField reference="products" source="product">
           <TextField source="name"></TextField>
         </ReferenceField>
+        <TextField source="address" />
         <BooleanField source="used" />
         <EditButton />
       </Datagrid>

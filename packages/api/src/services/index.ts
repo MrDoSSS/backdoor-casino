@@ -8,6 +8,7 @@ import rewards from './rewards/rewards.service'
 import slotMachine from './slot-machine/slot-machine.service'
 import twitterCodes from './twitter-codes/twitter-codes.service'
 import withdraw from './withdraw/withdraw.service'
+import shop from './shop/shop.service';
 // Don't remove this comment. It's needed to format import lines nicely.
 
 export default function (app: Application): void {
@@ -20,4 +21,5 @@ export default function (app: Application): void {
   app.configure(slotMachine)
   app.configure(twitterCodes)
   app.configure(withdraw)
+  app.configure(shop);
 }

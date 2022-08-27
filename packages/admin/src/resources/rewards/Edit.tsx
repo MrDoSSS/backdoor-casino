@@ -1,12 +1,13 @@
 import { Edit, SimpleForm, required } from 'react-admin'
-import { ReferenceInput, SelectInput } from 'react-admin'
-import { RichTextInput } from 'ra-input-rich-text'
+import { ReferenceInput, SelectInput, TextInput } from 'react-admin'
 
 export const RewardsEdit = (props: any) => {
   return (
     <Edit {...props}>
       <SimpleForm>
-        <RichTextInput source="credential" validate={[required()]} />
+        <TextInput source="login" />
+        <TextInput source="password" />
+        <TextInput source="key" />
         <ReferenceInput
           source="product"
           reference="products"
@@ -14,6 +15,7 @@ export const RewardsEdit = (props: any) => {
         >
           <SelectInput label="Product" optionText="name" />
         </ReferenceInput>
+        <TextInput source="address" />
       </SimpleForm>
     </Edit>
   )

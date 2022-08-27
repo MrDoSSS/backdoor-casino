@@ -5,6 +5,7 @@ import TheHistoryTable from '@/components/profile/TheHistoryTable.vue'
 import ThePassiveStaking from '@/components/profile/ThePassiveStaking.vue'
 import TheWithdraw from '@/components/profile/TheWithdraw.vue'
 import TheSettings from '@/components/profile/TheSettings.vue'
+import ThePurchasesHistory from '@/components/profile/ThePurchasesHistory.vue'
 import { useUserStore } from '@/store/user'
 import { useWalletStore } from '@/store/wallet'
 
@@ -73,8 +74,10 @@ await userStore.get(walletStore.currentAccount)
           <TheWithdraw />
         </div>
       </div>
-      <h3>Transaction History</h3>
-      <TheHistoryTable />
+      <h3>My Purchases</h3>
+      <ThePurchasesHistory />
+      <!-- <h3>Transaction History</h3>
+      <TheHistoryTable /> -->
     </div>
   </div>
 </template>
@@ -82,7 +85,7 @@ await userStore.get(walletStore.currentAccount)
 <style lang="scss" scoped>
 .profile {
   background: url('/backgrounds/bg-mint-details.jpg') no-repeat,
-    url('/backgrounds/bg-slot-machine.png') no-repeat center -800%;
+    url('/backgrounds/bg-slot-machine.png') no-repeat center 50vh;
 
   padding: 8rem 0 15rem;
 

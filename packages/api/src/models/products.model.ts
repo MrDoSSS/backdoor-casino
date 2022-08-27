@@ -12,10 +12,14 @@ export default function (app: Application): Model<any> {
   const schema = new Schema(
     {
       name: { type: String, required: true },
-      description: { type: String },
+      subtitle: { type: String, required: true },
       tier: {
         type: Schema.Types.ObjectId,
         ref: 'productTiers',
+        required: true,
+      },
+      icon: {
+        type: String,
         required: true,
       },
     },
@@ -23,6 +27,15 @@ export default function (app: Application): Model<any> {
       timestamps: true,
     }
   )
+
+  schema.virtual('rewards', {
+    ref: 'rewards',
+    localField: '_id',
+    foreignField: 'product',
+    match: {
+      used: false,
+    },
+  })
 
   // This is necessary to avoid model compilation errors in watch mode
   // see https://mongoosejs.com/docs/api/connection.html#connection_Connection-deleteModel

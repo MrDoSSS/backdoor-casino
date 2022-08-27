@@ -1,12 +1,12 @@
 import { TextInput, Create, SimpleForm, required } from 'react-admin'
 import { ReferenceInput, SelectInput } from 'react-admin'
-import { RichTextInput } from 'ra-input-rich-text'
 
 export const ProductsCreate = (props: any) => {
   return (
     <Create {...props}>
       <SimpleForm>
         <TextInput source="name" validate={[required()]} />
+        <TextInput source="subtitle" validate={[required()]} />
         <ReferenceInput
           source="tier"
           reference="product-tiers"
@@ -14,7 +14,7 @@ export const ProductsCreate = (props: any) => {
         >
           <SelectInput label="Tier" optionText="name" />
         </ReferenceInput>
-        <RichTextInput source="description" />
+        <TextInput source="icon" validate={[required()]} />
       </SimpleForm>
     </Create>
   )

@@ -6,6 +6,7 @@ export const ProductTiersList = () => {
       <Datagrid>
         <TextField source="name" />
         <NumberField source="cost" />
+        <NumberField source="order" />
         <EditButton />
       </Datagrid>
     </List>

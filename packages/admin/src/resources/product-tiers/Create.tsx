@@ -12,6 +12,7 @@ export const ProductTiersCreate = (props: any) => {
       <SimpleForm>
         <TextInput source="name" validate={[required()]} />
         <NumberInput source="cost" validate={[required()]} />
+        <NumberInput source="order" validate={[required()]} />
       </SimpleForm>
     </Create>
   )

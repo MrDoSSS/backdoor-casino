@@ -7,6 +7,7 @@ export const ProductsEdit = (props: any) => {
     <Edit {...props}>
       <SimpleForm>
         <TextInput source="name" validate={[required()]} />
+        <TextInput source="subtitle" validate={[required()]} />
         <ReferenceInput
           source="tier"
           reference="product-tiers"
@@ -14,7 +15,7 @@ export const ProductsEdit = (props: any) => {
         >
           <SelectInput label="Tier" optionText="name" />
         </ReferenceInput>
-        <RichTextInput source="description" />
+        <TextInput source="icon" validate={[required()]} />
       </SimpleForm>
     </Edit>
   )

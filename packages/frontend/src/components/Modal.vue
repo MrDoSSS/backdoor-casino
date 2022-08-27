@@ -57,7 +57,19 @@ defineExpose({
   }
 
   &-sm &-content {
-    padding: 4rem 4rem 3rem;
+    padding: 4rem 6rem 6rem;
+
+    @include media-breakpoint-down(sm) {
+      padding: 4rem 3rem 3rem;
+    }
+  }
+
+  &-xs &-dialog {
+    max-width: 30rem;
+  }
+
+  &-xs &-content {
+    padding: 4rem;
   }
 
   &-content {

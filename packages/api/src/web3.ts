@@ -14,12 +14,9 @@ export default function (app: Application): void {
     ownerAddress,
   } = app.get('web3Options')
 
-  const env = app.get('env')
-
-  const providerUrl =
-    env === 'development'
-      ? 'ws://localhost:8545'
-      : `wss://${network}.infura.io/ws/v3/${infuraProjectId}`
+  const providerUrl = network
+    ? `wss://${network}.infura.io/ws/v3/${infuraProjectId}`
+    : 'ws://localhost:8545'
 
   const provider = new Web3.providers.WebsocketProvider(providerUrl, {
     clientConfig: { keepalive: true, keepaliveInterval: -1 },

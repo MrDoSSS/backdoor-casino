@@ -7,13 +7,13 @@ const { authenticate } = feathersAuthentication.hooks
 
 export default {
   before: {
-    all: [],
-    find: [authenticate('jwt'), limitToUser()],
-    get: [authenticate('jwt'), limitToUser()],
-    create: [authenticate('jwt'), checkPermissions({ roles: ['admin'] })],
-    update: [authenticate('jwt'), checkPermissions({ roles: ['admin'] })],
-    patch: [authenticate('jwt'), checkPermissions({ roles: ['admin'] })],
-    remove: [authenticate('jwt'), checkPermissions({ roles: ['admin'] })],
+    all: [authenticate('jwt')],
+    find: [limitToUser()],
+    get: [limitToUser()],
+    create: [checkPermissions({ roles: ['admin'] })],
+    update: [checkPermissions({ roles: ['admin'] })],
+    patch: [checkPermissions({ roles: ['admin'] })],
+    remove: [checkPermissions({ roles: ['admin'] })],
   },
 
   after: {
