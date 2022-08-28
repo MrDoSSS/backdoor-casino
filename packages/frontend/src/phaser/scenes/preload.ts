@@ -3,6 +3,17 @@ import { SYMBOLS } from '@/phaser/symbols'
 import { useUserStore } from '@/store/user'
 import { useWalletStore } from '@/store/wallet'
 
+import Bg from '@/assets/slot-machine/Bg.png'
+import Dirt from '@/assets/slot-machine/Dirt.png'
+import Glare from '@/assets/slot-machine/Glare.png'
+import Numbers from '@/assets/slot-machine/Numbers.png'
+import Rewards from '@/assets/slot-machine/Rewards.png'
+import Sections from '@/assets/slot-machine/Sections.png'
+import Shadow from '@/assets/slot-machine/Shadow.png'
+import ActionsBg from '@/assets/slot-machine/ActionsBg.png'
+import SpinBtn from '@/assets/slot-machine/SpinBtn.png'
+import HelpBtn from '@/assets/slot-machine/HelpBtn.png'
+
 export class PreloadScene extends Phaser.Scene {
   private progressBar?: Phaser.GameObjects.Graphics
   private progressBox?: Phaser.GameObjects.Graphics
@@ -22,16 +33,16 @@ export class PreloadScene extends Phaser.Scene {
     })
 
     this.load.image('Logo', '/logo.png')
-    this.load.image('Bg', '/slot-machine-1/Bg.png')
-    this.load.image('Dirt', '/slot-machine-1/Dirt.png')
-    this.load.image('Glare', '/slot-machine-1/Glare.png')
-    this.load.image('Numbers', '/slot-machine-1/Numbers.png')
-    this.load.image('Rewards', '/slot-machine-1/Rewards.png')
-    this.load.image('Sections', '/slot-machine-1/Sections.png')
-    this.load.image('Shadow', '/slot-machine-1/Shadow.png')
-    this.load.image('ActionsBg', '/slot-machine-1/ActionsBg.png')
-    this.load.image('SpinBtn', '/slot-machine-1/SpinBtn.png')
-    this.load.image('HelpBtn', '/slot-machine-1/HelpBtn.png')
+    this.load.image('Bg', Bg)
+    this.load.image('Dirt', Dirt)
+    this.load.image('Glare', Glare)
+    this.load.image('Numbers', Numbers)
+    this.load.image('Rewards', Rewards)
+    this.load.image('Sections', Sections)
+    this.load.image('Shadow', Shadow)
+    this.load.image('ActionsBg', ActionsBg)
+    this.load.image('SpinBtn', SpinBtn)
+    this.load.image('HelpBtn', HelpBtn)
 
     for (const symbol of SYMBOLS) {
       this.load.image(symbol.name, symbol.image)

@@ -1,62 +1,75 @@
+import Oni from '@/assets/symbols/oni.png'
+import Samurai from '@/assets/symbols/samurai.png'
+import GoldCoin from '@/assets/symbols/gold-coin.png'
+import Card from '@/assets/symbols/card.png'
+import Girl from '@/assets/symbols/girl-bridge.png'
+import BanzaiTree from '@/assets/symbols/banzai-tree.png'
+import CoubleDice from '@/assets/symbols/couble-dice.png'
+import Katana from '@/assets/symbols/katana.png'
+import Clubs from '@/assets/symbols/clubs.png'
+import Helmet from '@/assets/symbols/helmet.png'
+import Heart from '@/assets/symbols/heart.png'
+import Fish from '@/assets/symbols/fish.png'
+
 export const SYMBOLS = [
   {
     id: 1,
     name: 'Oni',
-    image: '/symbols-1/oni.png',
+    image: Oni,
   },
   {
     id: 2,
     name: 'Samurai',
-    image: '/symbols-1/samurai.png',
+    image: Samurai,
   },
   {
     id: 3,
     name: 'Gold Coin',
-    image: '/symbols-1/gold-coin.png',
+    image: GoldCoin,
   },
   {
     id: 4,
     name: 'Card',
-    image: '/symbols-1/card.png',
+    image: Card,
   },
   {
     id: 5,
     name: 'Girl on the Bridge',
-    image: '/symbols-1/girl-bridge.png',
+    image: Girl,
   },
   {
     id: 6,
     name: 'Banzai Tree',
-    image: '/symbols-1/banzai-tree.png',
+    image: BanzaiTree,
   },
   {
     id: 7,
     name: 'Couble Dice',
-    image: '/symbols-1/couble-dice.png',
+    image: CoubleDice,
   },
   {
     id: 8,
     name: 'Katana',
-    image: '/symbols-1/katana.png',
+    image: Katana,
   },
   {
     id: 9,
     name: 'Clubs',
-    image: '/symbols-1/clubs.png',
+    image: Clubs,
   },
   {
     id: 10,
     name: 'Helmet',
-    image: '/symbols-1/helmet.png',
+    image: Helmet,
   },
   {
     id: 11,
     name: 'Heart',
-    image: '/symbols-1/heart.png',
+    image: Heart,
   },
   {
     id: 12,
     name: 'Fish',
-    image: '/symbols-1/fish.png',
+    image: Fish,
   },
 ]

@@ -1,7 +1,20 @@
 <script lang="ts" setup>
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Navigation, Virtual } from 'swiper'
-import { inject, ref, onMounted, onUnmounted } from 'vue'
+import { inject } from 'vue'
+
+import Oni from '@/assets/symbols/oni.png'
+import Samurai from '@/assets/symbols/samurai.png'
+import GoldCoin from '@/assets/symbols/gold-coin.png'
+import Card from '@/assets/symbols/card.png'
+import Girl from '@/assets/symbols/girl-bridge.png'
+import BanzaiTree from '@/assets/symbols/banzai-tree.png'
+import CoubleDice from '@/assets/symbols/couble-dice.png'
+import Katana from '@/assets/symbols/katana.png'
+import Clubs from '@/assets/symbols/clubs.png'
+import Helmet from '@/assets/symbols/helmet.png'
+import Heart from '@/assets/symbols/heart.png'
+import Fish from '@/assets/symbols/fish.png'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -11,51 +24,51 @@ const mq = inject('mq') as any
 const symbols = [
   {
     name: 'Oni | Rank #1',
-    image: '/symbols/oni.png',
+    image: Oni,
   },
   {
     name: 'Samurai | Rank #2',
-    image: '/symbols/samurai.png',
+    image: Samurai,
   },
   {
     name: 'Gold Coin | Rank #3',
-    image: '/symbols/gold-coin.png',
+    image: GoldCoin,
   },
   {
     name: 'Card | Rank #4',
-    image: '/symbols/card.png',
+    image: Card,
   },
   {
     name: 'Girl on the Bridge | Rank #5',
-    image: '/symbols/girl-bridge.png',
+    image: Girl,
   },
   {
     name: 'Banzai Tree | Rank #6',
-    image: '/symbols/banzai-tree.png',
+    image: BanzaiTree,
   },
   {
     name: 'Couble Dice | Rank #7',
-    image: '/symbols/couble-dice.png',
+    image: CoubleDice,
   },
   {
     name: 'Katana | Rank #8',
-    image: '/symbols/katana.png',
+    image: Katana,
   },
   {
     name: 'Clubs | Rank #9',
-    image: '/symbols/clubs.png',
+    image: Clubs,
   },
   {
     name: 'Helmet | Rank #10',
-    image: '/symbols/helmet.png',
+    image: Helmet,
   },
   {
     name: 'Heart | Rank #11',
-    image: '/symbols/heart.png',
+    image: Heart,
   },
   {
     name: 'Fish | Rank #12',
-    image: '/symbols/fish.png',
+    image: Fish,
   },
 ]
 </script>
