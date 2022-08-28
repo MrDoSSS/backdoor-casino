@@ -23,7 +23,7 @@ const buy = async () => {
       tierId: props.product.tier,
     })
     success.value = true
-  } catch (e: Error) {
+  } catch (e: any) {
     error.value = e.message
   } finally {
     loading.value = false
