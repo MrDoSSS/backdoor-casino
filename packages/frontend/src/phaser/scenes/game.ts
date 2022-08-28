@@ -519,6 +519,8 @@ export class GameScene extends Phaser.Scene {
       const data = await slotMachineService.create({})
       const tweens = this.tweens.getAllTweens()
 
+      await this.userStore.get(this.walletStore.currentAccount)
+
       if (!data.win) {
         this.drawUniqueSymbols()
         tweens[tweens.length - 1].on('complete', () => {
@@ -547,8 +549,6 @@ export class GameScene extends Phaser.Scene {
           winners.push(symbols[si])
         })
       })
-
-      await this.userStore.get(this.walletStore.currentAccount)
 
       tweens[tweens.length - 1].on('complete', () => {
         this.messageText.setText(
