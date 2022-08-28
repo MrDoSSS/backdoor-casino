@@ -14,7 +14,7 @@ export default function (app: Application): Model<any> {
       code: {
         type: String,
         required: true,
-        default: Math.random().toString(36).slice(-8),
+        default: () => Math.random().toString(36).slice(-8),
       },
       address: { type: String, required: true, unique: true },
       used: {
