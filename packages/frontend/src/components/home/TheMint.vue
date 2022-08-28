@@ -131,7 +131,7 @@ const mint = async () => {
           <div class="d-flex mb-2">
             <div class="mint-box me-2">
               <div class="mint-box-label">LAUNCH</div>
-              <div class="mint-box-value">28/08</div>
+              <div class="mint-box-value">02/09</div>
             </div>
             <div class="mint-box">
               <div class="mint-box-label">SUPPLY</div>

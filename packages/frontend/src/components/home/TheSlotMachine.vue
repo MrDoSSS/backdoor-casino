@@ -46,8 +46,8 @@ const symbols = [
     image: '/symbols/clubs.png',
   },
   {
-    name: 'Shuriken | Rank #10',
-    image: '/symbols/shuriken.png',
+    name: 'Helmet | Rank #10',
+    image: '/symbols/helmet.png',
   },
   {
     name: 'Heart | Rank #11',

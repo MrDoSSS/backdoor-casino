@@ -46,8 +46,8 @@ export const SYMBOLS = [
   },
   {
     id: 10,
-    name: 'Shuriken',
-    image: '/symbols/shuriken.png',
+    name: 'Helmet',
+    image: '/symbols/helmet.png',
   },
   {
     id: 11,

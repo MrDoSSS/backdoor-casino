@@ -2,6 +2,9 @@ import Phaser from 'phaser'
 import shuffle from 'lodash/shuffle'
 import chunk from 'lodash/chunk'
 import random from 'lodash/random'
+import maxBy from 'lodash/maxBy'
+import minBy from 'lodash/minBy'
+import xor from 'lodash/xor'
 import { SYMBOLS } from '@/phaser/symbols'
 import { useUserStore } from '@/store/user'
 import { useWalletStore } from '@/store/wallet'
@@ -46,7 +49,13 @@ export class GameScene extends Phaser.Scene {
   }
 
   get blurPipeline() {
+    if (this.isMobile) return
+
     return this.plugins.get('rexKawaseBlurPipeline') as KawaseBlurPipelinePlugin
+  }
+
+  get isMobile() {
+    return window.matchMedia('only screen and (max-width: 959px)').matches
   }
 
   drawNumbers() {
@@ -131,21 +140,7 @@ export class GameScene extends Phaser.Scene {
           break
       }
 
-      left.forEach((c) => {
-        this.add.text(c.x - 20, c.y - 15, (i + 1).toString(), {
-          fontFamily: 'Teko',
-          color: '#000',
-          fontSize: '3rem',
-          fontStyle: 'bold',
-          fixedHeight: 40,
-          fixedWidth: 40,
-          align: 'center',
-        })
-        this.numberGraphic.fillCircleShape(c)
-        this.numberGraphic.strokeCircleShape(c)
-      })
-
-      right.forEach((c) => {
+      left.concat(right).forEach((c) => {
         this.add.text(c.x - 20, c.y - 15, (i + 1).toString(), {
           fontFamily: 'Teko',
           color: '#000',
@@ -300,6 +295,168 @@ export class GameScene extends Phaser.Scene {
     return newSymbol
   }
 
+  drawUniqueSymbols(winner = {}) {
+    const usedSymbols = new Set<string>()
+
+    this.containers.forEach((container, ci) => {
+      const symbols = container.getAll() as Phaser.GameObjects.Image[]
+
+      symbols.slice(0, 3).forEach((s) => {
+        const newSymbol = this.anotherSymbol(winner, usedSymbols)
+        usedSymbols.add(newSymbol.name)
+        s.setTexture(newSymbol.name)
+        s.setX(this.centerX - s.displayWidth / 2)
+      })
+    })
+  }
+
+  drawPayline(winners: Phaser.GameObjects.Image[]) {
+    const winnersPoints = winners.map((s) => {
+      const { x, y } = s.getCenter()
+      return {
+        x: x + s.parentContainer.x,
+        y: y + s.parentContainer.y,
+      }
+    })
+
+    let points: { x: number; y: number }[] = []
+
+    const top = minBy(winnersPoints, 'y')!
+    const bottom = maxBy(winnersPoints, 'y')!
+    const left = minBy(winnersPoints, 'x')!
+    const right = maxBy(winnersPoints, 'x')!
+
+    if (winners.length === 4) {
+      const [center] = xor(winnersPoints, [top, bottom, left, right])
+
+      if (left.x === top.x || left.x === bottom.x) {
+        points = [
+          {
+            x: top.x,
+            y: top.y,
+          },
+          {
+            x: center.x,
+            y: center.y,
+          },
+          {
+            x: bottom.x,
+            y: bottom.y,
+          },
+          {
+            x: center.x,
+            y: center.y,
+          },
+          {
+            x: right.x,
+            y: right.y,
+          },
+          {
+            x: center.x,
+            y: center.y,
+          },
+        ]
+      } else if (right.x === top.x || right.x === bottom.x) {
+        points = [
+          {
+            x: top.x,
+            y: top.y,
+          },
+          {
+            x: center.x,
+            y: center.y,
+          },
+          {
+            x: bottom.x,
+            y: bottom.y,
+          },
+          {
+            x: center.x,
+            y: center.y,
+          },
+          {
+            x: left.x,
+            y: left.y,
+          },
+          {
+            x: center.x,
+            y: center.y,
+          },
+        ]
+      } else {
+        points = [
+          {
+            x: top.x,
+            y: top.y,
+          },
+          {
+            x: left.x,
+            y: left.y,
+          },
+          {
+            x: left.x,
+            y: left.y,
+          },
+          {
+            x: bottom.x,
+            y: bottom.y,
+          },
+          {
+            x: bottom.x,
+            y: bottom.y,
+          },
+          {
+            x: right.x,
+            y: right.y,
+          },
+          {
+            x: right.x,
+            y: right.y,
+          },
+          {
+            x: top.x,
+            y: top.y,
+          },
+        ]
+      }
+    } else if (winners.length === 3) {
+      const [center] = xor(winnersPoints, [left, right])
+
+      points = [
+        {
+          x: center.x,
+          y: center.y,
+        },
+        {
+          x: left.x,
+          y: left.y,
+        },
+        {
+          x: center.x,
+          y: center.y,
+        },
+        {
+          x: right.x,
+          y: right.y,
+        },
+      ]
+    } else {
+      return [
+        [winnersPoints[0], winnersPoints[6]],
+        [winnersPoints[1], winnersPoints[7]],
+        [winnersPoints[2], winnersPoints[8]],
+      ].forEach(([start, end]) => {
+        this.lineGraphic.strokeLineShape(
+          new Phaser.Geom.Line(start.x, start.y, end.x, end.y)
+        )
+      })
+    }
+
+    const polygon = new Phaser.Geom.Polygon(points)
+
+    this.lineGraphic.strokePoints(polygon.points, true)
+  }
+
   async play() {
     if (this.lock) return
 
@@ -311,6 +468,8 @@ export class GameScene extends Phaser.Scene {
       (this.userStore.user!.playingChips - 1).toString()
     )
 
+    this.messageText.setText('')
+
     this.lineGraphic?.destroy()
 
     this.lineGraphic = this.add.graphics({
@@ -320,11 +479,11 @@ export class GameScene extends Phaser.Scene {
       },
     })
 
-    this.request()
+    this.drawUniqueSymbols()
 
     this.containers.forEach((container, i) => {
       const symbols = container.getAll() as Phaser.GameObjects.Image[]
-      this.blurPipeline.add(container, { blur: 5 })
+      this.blurPipeline?.add(container, { blur: 5 })
 
       this.add.tween({
         targets: container,
@@ -333,12 +492,11 @@ export class GameScene extends Phaser.Scene {
         repeat: -1,
         onStart: () => {
           container.setY(container.y - 1000)
-          this.shuffleSymbols(container)
           symbols.forEach((img) => img.setVisible(true))
         },
         onComplete: () => {
           symbols.forEach((img, i) => img.setVisible([0, 1, 2].includes(i)))
-          this.blurPipeline.remove(container)
+          this.blurPipeline?.remove(container)
 
           if (this.containers.length - 1 !== i) return
 
@@ -352,89 +510,60 @@ export class GameScene extends Phaser.Scene {
         },
       })
     })
+
+    this.request()
   }
 
   async request() {
     try {
       const data = await slotMachineService.create({})
+      const tweens = this.tweens.getAllTweens()
 
-      if (data.win) {
-        const combinations = chunk(data.payline.combination, 3)
-        const symbol = SYMBOLS.find((s) => s.id === data.symbol.id)!
-        const usedSymbols = new Set<string>()
-
-        this.containers.forEach((container, ci) => {
-          const symbols = container.getAll() as Phaser.GameObjects.Image[]
-
-          symbols.slice(0, 3).forEach((s) => {
-            const newSymbol = this.anotherSymbol(symbol, usedSymbols)
-            usedSymbols.add(newSymbol.name)
-            s.setTexture(newSymbol.name)
-            s.setX(this.centerX - s.displayWidth / 2)
-          })
-
-          combinations[ci].forEach((value, si) => {
-            if (!value) return
-
-            symbols[si].setTexture(symbol.name)
-            symbols[si].setX(this.centerX - symbols[si].displayWidth / 2)
-          })
-        })
-
-        await this.userStore.get(this.walletStore.currentAccount)
-
-        const tweens = this.tweens.getAllTweens()
+      if (!data.win) {
+        this.drawUniqueSymbols()
         tweens[tweens.length - 1].on('complete', () => {
-          this.messageText.setText(
-            `WIN ${
-              data.symbol.prize * data.multiplier
-            } ${data.symbol.unit.toUpperCase()}`
-          )
-
-          const leftNumbers = this.paylines.left[data.payline.id - 1]
-          const rightNumbers = this.paylines.right[data.payline.id - 1]
-
-          if (leftNumbers.length > 1 && rightNumbers.length > 1) {
-            leftNumbers.forEach((left, i) => {
-              const right = rightNumbers[i]
-              const line = new Phaser.Geom.Line(
-                left.x,
-                left.y,
-                right.x,
-                right.y
-              )
-              this.lineGraphic.strokeLineShape(line)
-            })
-          } else if (leftNumbers.length > 1) {
-            leftNumbers.forEach((left, i) => {
-              const [right] = rightNumbers
-              this.lineGraphic.strokeLineShape(
-                new Phaser.Geom.Line(left.x, left.y, right.x, right.y)
-              )
-            })
-          } else if (rightNumbers.length > 1) {
-            rightNumbers.forEach((right, i) => {
-              const [left] = leftNumbers
-              this.lineGraphic.strokeLineShape(
-                new Phaser.Geom.Line(left.x, left.y, right.x, right.y)
-              )
-            })
-          } else {
-            const [left] = leftNumbers
-            const [right] = rightNumbers
-            this.lineGraphic.strokeLineShape(
-              new Phaser.Geom.Line(left.x, left.y, right.x, right.y)
-            )
-          }
+          this.messageText.setText('Better luck next time')
         })
-      } else {
-        this.containers.forEach(this.shuffleSymbols.bind(this))
+
+        return
       }
+
+      const combinations = chunk(data.payline.combination, 3)
+      const symbol = SYMBOLS.find((s) => s.id === data.symbol.id)!
+
+      this.drawUniqueSymbols(symbol)
+
+      const winners: Phaser.GameObjects.Image[] = []
+
+      this.containers.forEach((container, ci) => {
+        const symbols = container.getAll() as Phaser.GameObjects.Image[]
+
+        combinations[ci].forEach((value, si) => {
+          if (!value) return
+
+          symbols[si].setTexture(symbol.name)
+          symbols[si].setX(this.centerX - symbols[si].displayWidth / 2)
+
+          winners.push(symbols[si])
+        })
+      })
+
+      await this.userStore.get(this.walletStore.currentAccount)
+
+      tweens[tweens.length - 1].on('complete', () => {
+        this.messageText.setText(
+          `WIN ${
+            data.symbol.prize * data.multiplier
+          } ${data.symbol.unit.toUpperCase()}`
+        )
+
+        this.drawPayline(winners)
+      })
     } catch (e) {
       this.messageText.setText('Something went wrong...')
+      this.drawUniqueSymbols()
     } finally {
-      const tweens = this.tweens.getAllTweens()
-      tweens.forEach((tween, i) => {
+      this.tweens.getAllTweens().forEach((tween, i) => {
         const [config] = tween.data
         config.repeat = 5 + i * 3
         tween.restart()
