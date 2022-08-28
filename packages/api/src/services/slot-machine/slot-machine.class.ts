@@ -224,9 +224,9 @@ export class SlotMachine {
         .tokensOfOwner(user.address)
         .call()
 
-      // if (tokensOfOwner.length < 3) {
-      //   throw new PaymentError('You do not have enough tokens')
-      // }
+      if (tokensOfOwner.length < 3) {
+        throw new PaymentError('You do not have enough tokens')
+      }
 
       if (user.playingChips <= 0) {
         throw new PaymentError('You do not have enough playing chips')
