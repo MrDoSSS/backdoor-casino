@@ -23,7 +23,7 @@ const props = defineProps<{
               <span class="hero-title-highlight">luck for free</span>
               on&nbsp;our&nbsp;exclusive slot machine and let destiny decide
             </h3>
-            <template v-if="mq.lgPlus">
+            <!-- <template v-if="mq.lgPlus">
               <div v-if="countdown">
                 <div class="text-success mb-1 mb-lg-0">
                   <strong>MINT OPEN IN</strong>
@@ -55,7 +55,7 @@ const props = defineProps<{
               <a href="#mint" class="btn btn-primary btn-round btn-lg" v-else>
                 Mint now
               </a>
-            </template>
+            </template> -->
           </div>
         </div>
         <div class="col-12 col-lg-5 mb-3 mb-lg-0">
