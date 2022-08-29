@@ -24,7 +24,7 @@ const tweet = () => {
 
   const params =
     'scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=600,height=600'
-  const text = `♦️ Backdoor Casino Opening ♦️\n\nFirst ever NFT Slot Machine\n\nJoin VIP List: backdoorcasino.xyz\n\nBonus code: ${twitterCodeStore.code}\n\n🎰 Free Mint starts in ${hours} hrs.\n\n`
+  const text = `♦️ Backdoor Casino Opening ♦️\n\nFirst ever NFT Slot Machine\n\nJoin VIP List: backdoorcasino.xyz\n\nBonus code: ${twitterCodeStore.code}\n\n`
   const url = `https://twitter.com/intent/tweet?text=${encodeURI(
     text
   )}&hashtags=backdoorcasino&via=backdoorcasino`
@@ -109,7 +109,8 @@ const props = defineProps<{ countdownDate: Dayjs }>()
             <details>
               <summary>When is mint day?</summary>
               <ul>
-                <li>The mint will go live on 28th of August.</li>
+                <!-- <li>The mint will go live on 28th of August.</li> -->
+                <li>TBD</li>
               </ul>
             </details>
             <details>
