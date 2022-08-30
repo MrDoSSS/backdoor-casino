@@ -76,7 +76,7 @@ const props = defineProps<{
             />
           </div>
         </div>
-        <div class="col-12" v-if="mq.lgMinus">
+        <!-- <div class="col-12" v-if="mq.lgMinus">
           <div v-if="countdown">
             <div class="text-success mb-1 mb-lg-0">
               <strong>MINT OPEN IN</strong>
@@ -108,7 +108,7 @@ const props = defineProps<{
           <a href="#mint" class="btn btn-primary btn-round btn-lg" v-else>
             Mint now
           </a>
-        </div>
+        </div> -->
       </div>
     </div>
   </section>
